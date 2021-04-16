@@ -1,0 +1,3463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Florence Nightingale</title>
+  <style>
+
+    @font-face {
+      font-family: "Blacker";
+      src: url("./assets/Zetafonts-BlackerProDisplayMedium.woff2") format("woff2"); /* Modern Browsers */
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      user-select: none;
+      font-family: sans-serif;
+    }
+
+    #renderCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      touch-action: none;
+    }
+
+    #splash {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      touch-action: none;
+
+      background-image: url(assets/render__dark.jpg);
+      background-position: center;
+      background-size: cover;
+    }
+
+    #splash__message {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      padding: 24px;
+      background-color: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+    }
+
+    @media (min-width: 800px) {
+      #splash__message {
+        background-color: rgba(0,0,0,0.0);
+        backdrop-filter: blur(0px);
+      }
+    }
+    
+    #splash__message h1 {
+      font-size: 28px;
+      font-family: Blacker, serif;
+      color: #d70b8b;
+      line-height: 1.2em;
+      padding: 0 0 8px 0;
+      margin: 0;
+    }
+    
+    #splash__message h2 {
+      font-size: 24px;
+      font-family: helvetica, sans-serif;
+      font-weight: normal;
+      line-height: 1.2em;
+      color: white;
+      padding: 0 0 8px 0;
+      margin: 0;
+    }
+    
+    #splash__message h3 {
+      font-size: 16px;
+      font-family: helvetica, sans-serif;
+      font-weight: lighter;
+      line-height: 1.2em;
+      color: white;
+      padding: 0;
+      margin: 0;
+    }
+
+    @media (min-width:1600px) {
+      #splash__message h1 {
+        font-size: 36px;
+      }
+      
+      #splash__message h2 {
+        font-size: 34px;
+      }
+    }
+
+    
+    #splash__progress {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width:600px) {
+      #splash__progress {
+        bottom: 110px;
+      }
+    }
+
+    
+    #splash__bad_browser {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 40px;
+      text-align: center;
+      color: white;
+      font-size: 24px;
+      font-family: helvetica, sans-serif;
+    }
+
+    @media (min-width:600px) {
+      #splash__bad_browser {
+        bottom: 110px;
+      }
+    }
+
+    #splash__progress_bar {
+      width: 90%;
+      max-width: 620px;
+      height: 12px;
+      background-color: white;
+      border-radius: 10px;
+      margin: 24px 0;
+    }
+
+    #splash__progress_bar__progress {
+      width: 0%;
+      height: 12px;
+      background-color: #d70b8b;
+      border-radius: 10px;
+    }
+
+    #splash__enter_button {
+      display: none;
+      height: 60px;
+      width: 200px;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background-color: #d70b8b;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    #splash__logo {
+      display: none;
+      position: absolute;
+      top: 24px;
+      right: 24px;
+    }
+
+    @media (min-width:600px) {
+      #splash__logo {
+        display: block;
+      }
+    }
+
+    #hint_wrapper {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      z-index: 100;
+    }
+
+    #hint {
+      position: relative;
+      left: 0;
+      top: 20px;
+      padding: 12px 16px 8px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 8px;
+      opacity: 0;
+      transition: all 0.4s ease-in-out;
+    }
+
+    #hint p {
+      color: white;
+      font-size: 12px;
+      padding: 0;
+      margin: 0 0 4px 0;
+    }
+
+    #hint i {
+      width: 16px;
+      text-align: center;
+    }
+
+    #open_menu_button {
+      display: none;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 60px;
+      text-align: center;
+      padding: 16px;
+      color: white;
+      font-size: 14px;
+      background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      cursor: pointer;
+    }
+    
+    #nav {
+      position: absolute;
+      top: 0;
+      right: -232px;
+      bottom: 0;
+      overflow: auto;
+      width: 200px;
+      padding: 0px 16px;
+      background-color: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      transition: right 200ms ease-in-out;
+    }
+
+    #nav__content {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    #nav:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: rgba(0,0,0,0.2);
+    }
+
+    #nav__control {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    #close_menu_button {
+      flex: 0 0 auto;
+      text-align: left;
+      padding: 16px 16px 16px 0px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #expand_menu_button,
+    #contract_menu_button {
+      flex: 0 0 auto;
+      text-align: left;
+      padding: 16px 0px 16px 16px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      color: white;
+    }
+
+    #contract_menu_button {
+      display: none;
+    }
+
+    .nav__button {
+      flex: 0 0 auto;
+      font-size: 13px;
+      cursor: pointer;
+      color: #0090b0;
+      margin: 4px 0;
+    }
+
+    .nav__button p {
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav__button:hover { 
+      color: white;
+    }
+
+    .nav__button a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #nav__map {
+      flex: 0 0 auto;
+      text-align: center;
+    }
+
+    #nav__map__pledge,
+    #nav__map__longfellow,
+    #nav__map__speaks,
+    #nav__map__quiz,
+    #nav__map__share,
+    #nav__map__quotes,
+    #nav__map__hhc,
+    #nav__map__welcome,
+    #nav__map__coxcomb,
+    #nav__map__timeline,
+    #nav__map__center {
+      fill: #666666;
+      cursor: pointer;
+    }
+
+    #nav__current {
+      flex: 0 0 auto;
+      font-size: 18px;
+      padding-top: 16px;
+      min-height: 52px;
+      color: #cb007b;
+    }
+
+    #nav__current--hover {
+      display: none;
+      flex: 0 0 auto;
+      font-size: 18px;
+      padding-top: 16px;
+      min-height: 52px;
+      color: #cb007b;
+    }
+
+    #nav__map__pledge:hover,
+    #nav__map__longfellow:hover,
+    #nav__map__speaks:hover,
+    #nav__map__quiz:hover,
+    #nav__map__share:hover,
+    #nav__map__quotes:hover,
+    #nav__map__hhc:hover,
+    #nav__map__welcome:hover,
+    #nav__map__coxcomb:hover,
+    #nav__map__timeline:hover,
+    #nav__map__center:hover {
+      fill: #888888;
+    }
+    
+    .nav__title {
+      flex: 0 0 auto;
+      color: white;
+      font-size: 12px;
+      padding-top: 4px;
+      border-top: 1px solid white;
+      margin: 16px 0 16px 0;
+    }
+
+    #nav__additional_resources {
+      margin-top: 32px;
+    }
+
+    #nav__brand {
+      flex: 0 0 auto;
+      padding: 16px 0 8px 0;
+      text-align: center;
+      font-size: 8px;
+      color: white;
+    } 
+
+    #nav__brand img {
+      width: 120px;
+      padding-bottom:16px;
+    }
+    
+    .modal {
+      display: none;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      overflow: auto;
+    }
+
+    #close_modal_button {
+      display: none;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 60px;
+      text-align: right;
+      padding: 16px;
+      color: white;
+      font-size: 14px;
+      z-index: 200;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    
+    .modal__content {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 100%;
+      padding: 40px 16px 60px 16px;
+    }
+    
+    .modal__content h1 {
+      font-size: 32px;
+      font-family: Blacker, serif;
+      line-height: 1.2em;
+      color: #0090b0;
+      width: 100%;
+      max-width: 620px;
+      padding: 0;
+      margin: 0 0 16px 0;
+    }
+    .modal__content p {
+      display: block;
+      font-size: 18px;
+      font-family: Helvetica, sans-serif;
+      line-height: 1.2em;
+      color: white;
+      width: 100%;
+      max-width: 620px;
+      padding: 0;
+      margin: 0 0 16px 0;
+      text-align: left;
+    }
+    .modal__content a {
+      color: #d70b8b;
+      text-decoration: none;
+    }
+    
+    .modal__content--centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal__content--column {
+      column-count: 1;
+    }
+
+    @media (min-width:600px) {
+      .modal__content--column {
+        column-count: 2;
+      }      
+    }
+
+    @media (min-width:1200px) {
+      .modal__content--column {
+        column-count: 4;
+      }      
+    }
+
+    #about__button {
+      display: inline-block;
+      color: #cb007b;
+      cursor: pointer;
+    }
+
+    #hhc__modal_1,
+    #hhc__modal_2,
+    #hhc__modal_3,
+    #hhc__modal_4 {
+      background-color: rgba(255,255,255,0.7);
+    }
+
+    #timeline__modal_1,
+    #timeline__modal_2,
+    #timeline__modal_3,
+    #timeline__modal_4 {
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    
+
+
+
+    .modal__content--hhc {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal__content--hhc p {
+      max-width: 300px;
+      color: #424242;
+    }
+
+
+    .modal__content--hhc img {
+      margin-bottom: 16px;
+    }
+
+    @media (min-width:960px) {
+      .hcc__with_image {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      .hcc__with_image > div:first-child {
+        margin-right: 24px;
+      }
+    }
+
+    .modal__content--hhc > div:first-child,
+    .modal__content--hhc > div:last-child {
+      width: 120px;
+    }
+
+    .hhc__prev_button,
+    .hhc__next_button {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      font-size: 24px;
+      line-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #aaa;
+      color: white;
+      margin: 0 40px;
+      cursor: pointer;
+    }
+
+    .modal__content--hhc ul {
+      padding: 0;
+      margin: 0;
+      color: #424242;
+    }
+
+    .modal__content--hhc li {
+      margin-left: 20px;
+      max-width: 280px;
+      font-size: 18px;
+    }
+
+    #hhc__modal_5 .modal__content--hhc p,
+    #hhc__modal_5 .modal__content--hhc li,
+    #hhc__modal_6 .modal__content--hhc p,
+    #hhc__modal_6 .modal__content--hhc li,
+    #hhc__modal_7 .modal__content--hhc p,
+    #hhc__modal_7 .modal__content--hhc li {
+      color: white;
+    }
+
+    #longfellow_modal {
+      background: rgba(215, 11, 139, 0.7);
+    }
+
+    #longfellow_modal h1 {
+      font-family: Blacker, serif;
+      color: white;
+      padding: 0;
+      margin: 0;
+    }
+
+    #longfellow_modal h2 {
+      color: black;
+      font-size: 24px;
+      font-style: italic;
+      font-weight: normal;
+      font-family: Blacker, serif;
+      padding: 0 0 24px 0;
+      margin: 0;
+    }
+    
+    .modal__content--timeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal__content--timeline img {
+      max-height:80vh;
+      max-width: 80vw;
+      object-fit: cover;
+      object-position: center;
+      margin-bottom: 8px;
+    }
+
+    .modal__content--timeline nav {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      color: white;
+      font-family: Blacker;
+      font-size: 1.2em;
+    }
+
+    .modal__content--timeline nav .next,
+    .modal__content--timeline nav .prev {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .modal__content--coxcomb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal__content--coxcomb .container {
+      position: relative;
+    }
+
+    .modal__content--coxcomb img {
+      max-height:90vh;
+      max-width: 90vw;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .modal__content--coxcomb nav {
+      position: absolute;
+    }
+
+    .modal__content--coxcomb .next {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 15%;
+      height: 20%;
+      cursor: pointer;
+    }
+
+    .modal__content--coxcomb .prev {
+      position: absolute;
+      bottom: 0;
+      right: 22%;
+      width: 15%;
+      height: 20%;
+      cursor: pointer;
+    }
+
+    .modal--quiz {
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .modal--quiz h1 {
+      font-family: Blacker, serif;
+      color: #424242;
+      padding: 0 0 8px 0;
+      border-bottom: 1px solid #424242;
+      margin: 0 0 12px 0;
+      width: 100%;
+      max-width:400px;
+    }
+
+    p.quiz_modal__question {
+      font-family: Blacker, serif;
+      font-size: 24px;
+      color: #000000;
+      padding: 0 0 16px 0;
+      width: 100%;
+      max-width:400px;
+    }
+
+    .quiz_modal__answer {
+      background: #aaaaaa;
+      padding: 8px;
+      margin: 0 0 8px 0;
+      width: 100%;
+      max-width:400px;
+      cursor: pointer;
+      color: #ffffff;
+    }
+
+    .quiz_modal__answer_inner {
+      padding: 16px;
+      border: 1px solid white;
+      font-size: 18px;
+      line-height: 24px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .quiz_modal__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      width: 18px;
+      height: 18px;
+      margin-top:4px;
+      line-height: 18px;
+      border-radius: 8px;
+      background-color: white;
+      font-size: 12px;
+      line-height: 12px;
+      text-decoration: center;
+    }
+
+    .quiz_modal__icon .fa-times {
+      color: #e16964;
+      display: none;
+    }
+
+    .quiz_modal__icon .fa-check {
+      color: #88c968;
+      display: none;
+    }
+
+    p.quiz_modal__details {
+      opacity: 0;
+      font-size: 16px;
+      color: #424242;
+      width: 100%;
+      max-width:400px;
+      padding: 16px 0 8px 0;
+      margin: 0;
+    }
+
+    p.quiz_modal__source {
+      opacity: 0;
+      font-size: 13px;
+      color: #424242;
+      width: 100%;
+      max-width:400px;
+      padding: 0 0 16px 0;
+      margin: 0;
+    }
+
+    p.quiz_modal__source a {
+      color: #424242;
+    }
+    p.quiz_modal__source a:hover {
+      color: #626262;
+    }
+
+    .quiz_modal__next_button {
+      opacity: 0;
+      display: flex;
+      height: 60px;
+      width: 200px;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background-color: #d70b8b;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    #quiz_modal_results h2 {
+      font-family: Blacker, serif;
+      color: #007ba0;
+      font-size: 32px;
+      line-height: 1.2em;
+      width: 100%;
+      max-width: 400px;
+      padding: 0 0 16px 0;
+      margin: 0;
+    }
+
+    #quiz_modal_results h3 {
+      color: #608e49;
+      font-size: 24px;
+      line-height: 1.2em;
+      width: 100%;
+      max-width: 400px;
+      padding:  0 0 16px 0;
+      margin: 0;
+    }
+
+    #quiz_modal_results p {
+      color: #424242;
+      font-size: 24px;
+      line-height: 1.2em;
+      font-weight: bold;
+      width: 100%;
+      max-width: 400px;
+      padding: 0;
+      margin: 0;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <canvas id="renderCanvas" touch-action="none"></canvas>
+
+  <div id="splash">
+    <div id="splash__message">
+      <h1>
+        Welcome to the<br/>
+        Virtual Florence Nightingale<br/>
+        Gallery Experience
+      </h1>
+      <h2>
+        Presented<br/>
+        by Eisai
+      </h2>
+      <h3>
+        Celebrating the achievements<br/>
+        and legacy of a nursing and<br/>
+        healthcare pioneer.
+      </h3>
+    </div>
+    <div id="splash__progress">
+      <div id="splash__progress_bar">
+        <div id="splash__progress_bar__progress"></div>
+      </div>
+      <div id="splash__enter_button">
+        <span>Enter Exhibit</span>
+      </div>
+    </div>
+    <section id="splash__bad_browser">
+      <p>
+        We're sorry, this browser isn't supported.<br/>
+        For the best experience on this site, please use Google Chrome, Microsoft Edge, Apple Safari or Mozilla Firefox.
+      </p>
+    </section>
+    <div id="splash__logo">
+      <img src="assets/logo.png" alt="Eisai"/>
+    </div>
+  </div>
+
+  <aside id="hint_wrapper">
+    <div id="hint"></div>
+  </aside>
+
+  <nav id="nav">
+    <div id="nav__content">
+      <div id="nav__control">
+        <div id="close_menu_button">
+          CLOSE <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+        <div id="expand_menu_button">
+          <i class="far fa-expand-arrows-alt"></i>
+        </div>
+        <div id="contract_menu_button">
+          <i class="far fa-compress-arrows-alt"></i>
+        </div>
+      </div>
+      <div class="nav__title">
+        Navigate the Exhibits
+      </div>
+      <div id="nav__map">
+        <svg width="173.92px" height="170.2px" viewBox="0 0 173.92 170.2">
+          <path id="nav__map__pledge" d="M103.46,66.76c3.37,2.11,6.26,4.97,8.39,8.33L141.1,58.2c-5.28-8.85-11.88-15.45-20.73-20.73L103.46,66.76z"/>
+          <path id="nav__map__longfellow" d="M49.5,18.34l27.45,47.55c3.48-1.86,7.37-2.93,11.33-3.11V7.95C74.16,8.1,61.8,11.41,49.5,18.34z"/>
+          <path id="nav__map__speaks" d="M90.3,62.77c3.98,0.13,7.9,1.16,11.41,2.99l22.7-39.31c-10.83-6.08-21.69-8.99-34.1-9.14V62.77z"/>
+          <path id="nav__map__quiz" d="M112.86,101.68l31.35,18.1c5.25-9.38,7.77-18.79,7.91-29.54h-36.19C115.79,94.24,114.73,98.17,112.86,101.68z"/>
+          <path id="nav__map__quotes" d="M115.93,88.24h57.99c-0.15-14.74-3.6-27.62-10.84-40.46l-50.24,29.01C114.71,80.31,115.78,84.24,115.93,88.24 z"/>
+          <path id="nav__map__share" d="M103.45,111.76l23.66,40.98c10.99-6.52,19.17-14.7,25.68-25.68l-40.94-23.64 C109.72,106.78,106.83,109.65,103.45,111.76z"/>
+          <path id="nav__map__hhc" d="M23.96,128.12c6.87,11.6,15.57,20.18,27.32,26.96c11.75,6.79,23.53,10.03,37.01,10.18v-49.52 c-8.76-0.38-16.67-5-21.34-12.45L23.96,128.12z"/>
+          <path id="nav__map__welcome" d="M90.28,115.76v54.44c14.07-0.15,26.36-3.44,38.62-10.35l-27.19-47.09C98.2,114.6,94.27,115.63,90.28,115.76z"/>
+          <path id="nav__map__coxcomb" d="M0,36.56l66.96,38.66c2.09-3.33,4.92-6.19,8.23-8.31L36.56,0C20.87,9.23,9.23,20.87,0,36.56z"/>
+          <path id="nav__map__timeline" d="M16.34,48.29C9.03,61.25,5.63,74.27,5.63,89.24s3.41,28,10.71,40.96l49.61-28.65 c-1.98-3.78-3.03-8.01-3.03-12.29c0-4.29,1.05-8.54,3.04-12.32L16.34,48.29z"/>
+          <path id="nav__map__center" d="M89.44,64.75c-13.52,0-24.52,11-24.52,24.52s11,24.52,24.52,24.52c13.52,0,24.52-11,24.52-24.52 S102.96,64.75,89.44,64.75z"/>    
+        </svg>
+      </div>
+      <div id="nav__current">
+        Welcome Message
+      </div>
+      <div id="nav__current--hover">
+        Welcome Message
+      </div>
+      <div class="nav__title">
+        Exhibits by Name
+      </div>
+      <div class="nav__button" id="nav__welcome">
+        <p>Welcome Message</p>
+      </div>
+      <div class="nav__button" id="nav__hhc">
+        <p>Eisai’s Pursuit of <em>hhc</em></p>
+      </div>
+      <div class="nav__button" id="nav__timeline">
+        <p>Nightingale’s Life</p>
+      </div>
+      <div class="nav__button" id="nav__coxcomb">
+        <p>Florence Nightingale –<br/>Graphic Designer</p>
+      </div>
+      <div class="nav__button" id="nav__longfellow">
+        <p>Longfellow and the Lady</p>
+      </div>
+      <div class="nav__button" id="nav__speaks">
+        <p>The Lady Speaks</p>
+      </div>
+      <div class="nav__button" id="nav__pledge">
+        <p>The Nightingale Pledge</p>
+      </div>
+      <div class="nav__button" id="nav__quotes">
+        <p>Quotable Flo</p>
+      </div>
+      <div class="nav__button" id="nav__quiz">
+        <p>“What Do You Know<br/>About Flo?” Quiz</p>
+      </div>
+      <div class="nav__button" id="nav__share">
+        <p>Sharing Station</p>
+      </div>
+      <div class="nav__title" id="nav__additional_resources">
+        Additional Resources
+      </div>
+      <div class="nav__button" id="nav__about">
+        <p>About This Gallery</p>
+      </div>
+      <div class="nav__button" id="nav__related">
+        <p>Related Sites</p>
+      </div>
+      <div class="nav__button" id="nav__website">
+        <p><a href="https://us.eisai.com/" target="_blank">Eisai Website</a></p>
+      </div>
+      <div class="nav__button" id="nav__privacy">
+        <p><a href="https://us.eisai.com/privacy-policy" target="_blank">Privacy Policy</a></p>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <div id="nav__brand">
+        <img src="assets/logo.png" alt="Eisai"/>
+        <div>Copyright © Eisai Inc. 2020. All Rights Reserved.</div>
+      </div>
+    </div>
+  </nav>
+
+  <nav id="open_menu_button">
+    <i class="fas fa-long-arrow-alt-left"></i> OPEN
+  </nav>
+
+  <section class="modal" id="about_modal">
+    <div class="modal__content modal__content--centered">
+      <h1>About This Gallery</h1>
+      <p>The circular design of this virtual gallery was inspired by the famous Coxcomb charts created by Florence Nightingale. The chart was based upon data she collected at Scutari Hospital, in Crimea, and used as part of a later report and pamphlet. The visually unique diagram was designed to capture the attention of influential people in an effort to improve the sanitation conditions in military hospitals. Her work helped make the case for eliminating unhealthy practices and ultimately helped save many lives.</p>
+      <p>To learn more about Nightingale’s Coxcomb Chart, <span id="about__button">click here.</span></p>
+    </div>
+  </section>
+  
+  <section class="modal" id="related_modal">
+    <div class="modal__content modal__content--centered">
+      <h1>Related Sites</h1>
+      <p>
+        If you are interested in learning more about the life and legacy of
+        Florence Nightingale, we recommend the following websites:
+      </p>
+      <p>
+        <a href="https://www.florence-nightingale.co.uk/" target="_blank" alt="The Florence Nightingale Museum">The Florence Nightingale Museum</a>
+      </p>
+      <p>
+        <a href="https://cwfn.uoguelph.ca/" target="_blank" alt="The Collected Works of Florence Nightingale">The Collected Works of Florence Nightingale</a>
+      </p>
+      <p>
+        <a href="http://hgar-srv3.bu.edu/web/florence-nightingale/home" target="_blank" alt="The Florence Nightingale Digitization Project">The Florence Nightingale Digitization Project</a>
+      </p>
+      <p>
+        <a href="http://www.countryjoe.com/nightingale/" target="_blank" alt="A Tribute to Florence Nightingale">A Tribute to Florence Nightingale</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_1">
+    <div class="modal__content modal__content--hhc">
+      <div></div>
+      <div>
+        <img src="assets/hhc-who.png" alt="World Health Organization"/>
+        <p>Aiming to eliminate lymphatic filariasis (LF), a major public health issue prominent in certain parts of the world, Eisai has committed to providing LF treatment for free to endemic countries that need the treatment until LF is eliminated in these countries. Since 2013, Eisai has supplied 2 billion tablets (as of March 2020) through the WHO to the people at risk in LF endemic countries.</p>
+      </div>
+      <div>
+        <div class="hhc__next_button">
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_2">
+    <div class="modal__content modal__content--hhc">
+      <div>
+        <div class="hhc__prev_button">
+          <i class="fas fa-long-arrow-alt-left"></i>
+        </div>
+      </div>
+      <div>
+        <img src="assets/hhc-DNDi.png" alt="DNDi"/>
+        <p>Eisai is collaborating with DND<em>i</em>, a non-profit drug research and development (R&amp;D) organization, on the clinical development of an Eisai antifungal compound for mycetoma, one of the world&#39;s most neglected tropical diseases (NTDs). Eisai is also working with DND<em>i</em> in other initiatives such as &quot;NTD Drug Discovery Booster&quot; consortium and The Global Antibiotic Research and Development Partnership (GARDP)<sup>*</sup>.</p>
+        <p>
+          <sup>*</sup>GARDP has been successfully incubated by DND<em>i</em> and is now an independent not-for-profit organization developing new treatments for drug-resistant infections that pose the greatest threat to health.
+        </p>
+      </div>
+      <div>
+        <div class="hhc__next_button">
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_3">
+    <div class="modal__content modal__content--hhc">
+      <div>
+        <div class="hhc__prev_button">
+          <i class="fas fa-long-arrow-alt-left"></i>
+        </div>
+      </div>
+      <div>
+        <img src="assets/hhc-access.png" alt="Access Accelerated"/>
+        <p>In January 2017, Eisai joined 22 healthcare and pharmaceutical companies, the World Bank and Union for International Cancer Control (UICC) to form Access Accelerated, a new coalition to address non-communicable disease (NCD) burdens in low and lower-middle income countries.</p>
+      </div>
+      <div>
+        <div class="hhc__next_button">
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_4">
+    <div class="modal__content modal__content--hhc">
+      <div>
+        <div class="hhc__prev_button">
+          <i class="fas fa-long-arrow-alt-left"></i>
+        </div>
+      </div>
+      <div>
+        <img src="assets/hhc-ghit.png" alt="GHIT Fund"/>
+        <p>
+          Eisai co-established GHIT Fund with the Government of Japan, the Bill &amp; Melinda Gates Foundation and other 4 Japanese pharmaceutical companies in 2013.
+        </p>
+        <p>
+          Since 2013, Eisai is taking the role of the council member as one of the founding partners. The GHIT Fund helps advance the development of new medicines, vaccines and diagnostics to fight infectious diseases in the developing world.
+        </p>
+      </div>
+      <div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_5">
+    <div class="modal__content modal__content--hhc">
+      <div>
+      </div>
+      <div class="hcc__with_image">
+        <div>
+          <img src="assets/hhc-magnolia_img.png" alt="Magnolia Members" width="200"/>
+        </div>
+        <div style="margin-top:-51px">
+          <img src="assets/hhc-magnolia.png" alt="Magnolia"/>
+          <p><strong>MAGNOLIA MEALS AT HOME<sup>®</sup></strong> provides meals at no cost to eligible patients and families living with any type of cancer.</p>
+          <ul>
+            <li>2,400+ patients have enrolled in the program</li>
+            <li>200+ employees have signed up to volunteer</li>
+            <li>63,000+ meals have been delivered</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="hhc__next_button">
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_6">
+    <div class="modal__content modal__content--hhc">
+      <div>
+        <div class="hhc__prev_button">
+          <i class="fas fa-long-arrow-alt-left"></i>
+        </div>
+      </div>
+      <div class="hcc__with_image">
+        <div>
+          <img src="assets/hhc-meal_train_img.png" alt="Meal Train Menu" width="200"/>
+        </div>
+        <div>
+          <img src="assets/hhc-meal_train.png" alt="Meal Train"/>
+          <p><strong>MEAL TRAIN SPONSORED BY MAGNOLIA</strong><br/>Mealtrain.com is a free, easy-to-use, shared online calendar that streamlines the process of giving and receiving meals to households going through a challenging or difficult time. Meal Train sponsored by Magnolia aims to broaden the positive impact of providing meals to patients living with breast cancer and their families during treatment.</p>
+          <ul>
+            <li>39,000+ meal trains have been created</li>
+            <li>643,000+ meals organized</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="hhc__next_button">
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_7">
+    <div class="modal__content modal__content--hhc">
+      <div>
+        <div class="hhc__prev_button">
+          <i class="fas fa-long-arrow-alt-left"></i>
+        </div>
+      </div>
+      <div class="hcc__with_image">
+        <div>
+          <img src="assets/hhc-paws_img.png" alt="Tieman O'Malley & Dobby" width="200"/>
+        </div>
+        <div style="margin-top:-62px">
+          <img src="assets/hhc-paws.png" alt="Paws for Compassion"/>
+          <p><strong>MAGNOLIA PAWS FOR COMPASSION<sup>®</sup></strong> is a special program, created by Eisai in partnership with the Epilepsy Foundation and 4 Paws for Ability, which seeks to increase access to animal assistance and raise awareness of the many benefits that service and therapy dogs can provide to those coping with an illness, such as epilepsy or a seizure disorder.</p>
+          <ul>
+            <li>16 service dogs’ placement costs covered by fundraisers</li>
+            <li>13 employees’ pets completed therapy dog training program</li>
+            <li>19 puppies sponsored to train as service dogs</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="timeline__modal_1">
+    <div class="modal__content modal__content--timeline">
+      <div>
+        <img class="image" src="assets/timeline-1.jpg" alt="Timeline"/>
+        <nav>
+          <div></div>
+          <div class="next">Crimean War (1854-1856) <i class="fas fa-caret-right"></i></div>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="timeline__modal_2">
+    <div class="modal__content modal__content--timeline">
+      <div>
+        <img class="image" src="assets/timeline-2.jpg" alt="Timeline"/>
+        <nav>
+          <div class="prev"><i class="fas fa-caret-left"></i> Early Years (1820s–1850s)</div>
+          <div class="next">Crimean War 1855-1856 <i class="fas fa-caret-right"></i></div>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="timeline__modal_3">
+    <div class="modal__content modal__content--timeline">
+      <div>
+        <img class="image" src="assets/timeline-3.jpg" alt="Timeline"/>
+        <nav>
+          <div class="prev"><i class="fas fa-caret-left"></i> Crimean War (1854-1855)</div>
+          <div class="next">Later Years (1856-1910) <i class="fas fa-caret-right"></i></div>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="timeline__modal_4">
+    <div class="modal__content modal__content--timeline">
+      <div>
+        <img class="image" src="assets/timeline-4.jpg" alt="Timeline"/>
+        <nav>
+          <div class="prev"><i class="fas fa-caret-left"></i> Crimean War (1854-1856)</div>
+          <div class="next"></div>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="coxcomb__modal_1">
+    <div class="modal__content modal__content--coxcomb">
+      <div class="container">
+        <img class="image" src="assets/coxcomb-modal-1.jpg" alt="Coxcomb"/>
+        <div class="next"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="coxcomb__modal_2">
+    <div class="modal__content modal__content--coxcomb">
+      <div class="container">
+        <img class="image" src="assets/coxcomb-modal-2.jpg" alt="Coxcomb"/>
+        <div class="prev"></div>
+        <div class="next"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="coxcomb__modal_3">
+    <div class="modal__content modal__content--coxcomb">
+      <div class="container">
+        <img class="image" src="assets/coxcomb-modal-3.jpg" alt="Coxcomb"/>
+        <div class="prev"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="longfellow_modal">
+    <div class="modal__content modal__content--centered">
+      <div>
+        <h1>Santa Filomena</h1>
+        <h2>by Henry Wadsworth Longfellow</h2>
+        <div class="modal__content--column">
+          <p>
+            Whene'er a noble deed is wrought,<br/>
+            Whene'er is spoken a noble thought,<br/>
+            Our hearts, in glad surprise,<br/>
+            To higher levels rise.
+          </p>
+          <p>
+            The tidal wave of deeper souls<br/>
+            Into our inmost being rolls,<br/>
+            And lifts us unawares<br/>
+            Out of all meaner cares.
+          </p>
+          <p>
+            Honor to those whose words or deeds<br/>
+            Thus help us in our daily needs,<br/>
+            And by their overflow<br/>
+            Raise us from what is low!
+          </p>
+          <p>
+            Thus thought I, as by night I read<br/>
+            Of the great army of the dead,<br/>
+            The tranches cold and damp,<br/>
+            The starved and frozen camp.
+          </p>
+          <p>
+            The wounded from the battle plain,<br/>
+            In dreary hospitals of pain,<br/>
+            The cheerless corridors, <br/>
+            The cold and stony floors.
+          </p>
+          <p>
+            Lo! In that house of misery<br/>
+            A lady with a lamp I see<br/>
+            Pass through the glimmering gloom,<br/>
+            And flit from room to room.
+          </p>
+          <p>
+            And slow, as in a dream of bliss,<br/>
+            The speechless sufferer turns to kiss<br/>
+            Her shadow, as it falls<br/>
+            Upon the darkening walls.
+          </p>
+          <p>
+            As if a door in heaven should be<br/>
+            Opened and then closed suddenly,<br/>
+            The vision came and went,<br/>
+            The light shone and was spent.
+          </p>
+          <p>
+            On England’s annals, through the long<br/>
+            Hereafter of her speech and song,<br/>
+            That light its rays shall cast<br/>
+            From portals of the past.
+          </p>
+          <p>
+            A Lady with a Lamp shall stand<br/>
+            In the great history of the land,<br/>
+            A noble type of good,<br/>
+            Heroic womanhood.
+          </p>
+          <p>
+            Nor even shall be wanting here<br/>
+            The palm, the lily, and the spear,<br/>
+            The symbols that of yore<br/>
+            Saint Filomena bore.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_1">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 1 of 5</h1>
+      <p class="quiz_modal__question">Florence Nightingale was born <br/>May 12th 1820 in...</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>London, England</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Florence, Italy</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Dublin, Ireland</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Istanbul, Turkey</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Nightingale was born in this central Italy city while her parents were on an extended two-year honeymoon.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.florence-nightingale.co.uk/florence/" target="_blank">https://www.florence-nightingale.co.uk/florence/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_2">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 2 of 5</h1>
+      <p class="quiz_modal__question">Henry Wadsworth Longfellow helped immortalize Nightingale in his poem entitled:</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Ministering Angel</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Heroine of Crimea</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Good Samaritan</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Santa Filomena</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Longfellow published his poem in the first issue (November 1857) of The Atlantic Monthly, which he founded.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.theatlantic.com/magazine/archive/1857/11/santa-filomena/531180/" target="_blank">https://www.theatlantic.com/magazine/archive/1857/11/santa-filomena/531180/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_3">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 3 of 5</h1>
+      <p class="quiz_modal__question">True or False: Florence Nightingale was laid to rest in Westminster Abbey.</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        An offer for Nightingale to be buried at Westminster was turned down by her relatives, and she was laid to rest in a family plot in Hampshire, England in keeping with her last wishes.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.shethepeople.tv/news/7-little-known-facts-about-florence-nightingale" target="_blank">https://www.shethepeople.tv/news/7-little-known-facts-about-florence-nightingale</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_4">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 4 of 5</h1>
+      <p class="quiz_modal__question">Nightingale was a prolific writer and author. Her most famous book is entitled...</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Medical Facility Sanitary Techniques</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Notes on Nursing</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Wartime Nursing</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Mortality and Wartime</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        “Notes on Nursing,” first published in 1859, is still in print today.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://en.wikipedia.org/wiki/Notes_on_Nursing" target="_blank">https://en.wikipedia.org/wiki/Notes_on_Nursing</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_5">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 5 of 5</h1>
+      <p class="quiz_modal__question">True or False: In 1861, the U.S. Army consulted Nightingale about caring for their Civil War casualties.</p>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        The Union government approached her for advice on how to best organize field hospitals.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.history.com/topics/womens-history/florence-nightingale-1" target="_blank">https://www.history.com/topics/womens-history/florence-nightingale-1</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_6">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 1 of 5</h1>
+      <p class="quiz_modal__question">True or False: Nightingale named Florence after the city where she was born -- Florence, Italy.</p>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Nightingale was born May 12th 1820 in Florence while her parents were on an extended honeymoon.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.florence-nightingale.co.uk/florence/" target="_blank">https://www.florence-nightingale.co.uk/florence/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_7">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 2 of 5</h1>
+      <p class="quiz_modal__question">True or False: After the Crimean war, Nightingale established the first nursing school in the world.</p>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        In 1860, from her base at St Thomas' Hospital, London, she opened the world’s first nursing school, now part of King's College, London.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://en.wikipedia.org/wiki/Florence_Nightingale" target="_blank">https://en.wikipedia.org/wiki/Florence_Nightingale</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_8">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 3 of 5</h1>
+      <p class="quiz_modal__question">True or False: Nightingale had two children, both of whom grew up to be involved in nursing.</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Nightingale felt that her nursing was her calling from God, and never married or had children.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.famousscientists.org/florence-nightingale/" target="_blank">https://www.famousscientists.org/florence-nightingale/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_9">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 4 of 5</h1>
+      <p class="quiz_modal__question">Florence Nightingale died in 1910 aged 90. Where was she buried?</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>St Paul's Cathedral</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Westminster Abbey</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Highgate Cemetery, London</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Hampshire, Outside London</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        An offer for Nightingale to be buried at Westminster was turned down by her relatives, and she was laid to rest in a family plot in Hampshire, England in keeping with her last wishes.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.shethepeople.tv/news/7-little-known-facts-about-florence-nightingale" target="_blank">https://www.shethepeople.tv/news/7-little-known-facts-about-florence-nightingale</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_10">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 5 of 5</h1>
+      <p class="quiz_modal__question">The British soldiers first called Nightingale “the lady with the lamp,” a phrase subsequently reported in The Times. By what other name was she called in the newspaper?</p>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Ministering Angel</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Angel of Mercy</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Angel of Crimea</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Angel of Scutari</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        The newspaper article read: ‘She is a “ministering angel”…as her slender form glides quietly along each corridor…”
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.nationalarchives.gov.uk/education/resources/florence-nightingale/" target="_blank">https://www.nationalarchives.gov.uk/education/resources/florence-nightingale/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_11">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 1 of 5</h1>
+      <p class="quiz_modal__question">When was Florence Nightingale born?</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>April 16, 1820</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>May 12, 1820</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>June 19, 1821</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>December 5, 1821</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Nightingale was born May 12th 1820 in Florence, Italy. The annual International Nurses Day is celebrated on her birthday.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://en.wikipedia.org/wiki/Florence_Nightingale" target="_blank">https://en.wikipedia.org/wiki/Florence_Nightingale</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_12">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 2 of 5</h1>
+      <p class="quiz_modal__question">Florence Nightingale’s beloved pet Athena was a...</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Raven</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Squirrel</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Owl</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Badger</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        During a trip to Athens, Florence rescued the owlet from a tormenting group of boys. When Athena died a few years later, she had the bird taxidermied.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.atlasobscura.com/places/athena-florence-nightingales-owl" target="_blank">https://www.atlasobscura.com/places/athena-florence-nightingales-owl</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_13">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 3 of 5</h1>
+      <p class="quiz_modal__question">The nursing school established by Florence was called the Nightingale:</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Academy for Nurses</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Training School for Nurses</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Nursing Conservatory</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Hospital Nursing College</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        In 1860, from her base at St Thomas' Hospital, London, she opened the world’s first nursing school, now part of King's College, London. 
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://en.wikipedia.org/wiki/Florence_Nightingale" target="_blank">https://en.wikipedia.org/wiki/Florence_Nightingale</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_14">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 4 of 5</h1>
+      <p class="quiz_modal__question">True or False: Nightingale never married, nor had any children.</p>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        While she did receive a few marriage proposals, Nightingale felt that her nursing was her calling from God, and never married or had children.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.famousscientists.org/florence-nightingale/" target="_blank">https://www.famousscientists.org/florence-nightingale/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_15">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 5 of 5</h1>
+      <p class="quiz_modal__question">True or False: Nightingale’s parents encouraged her career in nursing.</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Nursing was not considered a respectable profession at that time, and Florence’s well-to-do parents considered it below her social status.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.nationalarchives.gov.uk/education/resources/florence-nightingale/" target="_blank">https://www.nationalarchives.gov.uk/education/resources/florence-nightingale/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_16">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 1 of 5</h1>
+      <p class="quiz_modal__question">True or False: Florence Nightingale was the first female member of the Royal Statistical Society.</p>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        In 1858, two years after returning from the Crimea, Nightingale was elected the first female member of the Statistical Society (now the Royal Statistical Society).
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://rss.org.uk/about/history/" target="_blank">https://rss.org.uk/about/history/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_17">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 2 of 5</h1>
+      <p class="quiz_modal__question">Which American poet helped create the memorable epithet of Florence Nightingale as “The Lady With the Lamp”?</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Walt Whitman</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Henry David Thoreau</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Henry Wadsworth Longfellow</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Emily Dickinson</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Longfellow published his poem in the first issue (November 1857) of The Atlantic Monthly, which he founded.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.theatlantic.com/magazine/archive/1857/11/santa-filomena/531180/" target="_blank">https://www.theatlantic.com/magazine/archive/1857/11/santa-filomena/531180/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_18">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 3 of 5</h1>
+      <p class="quiz_modal__question">Nightingale earned the persona "The Lady with the Lamp" tending to wounded British soldiers in which war?</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Boxer Rebellion</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Franco-Prussian War</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Boer War</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>Crimean War</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Nightingale brought a team of 38 volunteer nurses with her to care for the British soldiers fighting in the conflict.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2920984/" target="_blank">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2920984/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_19">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 4 of 5</h1>
+      <p class="quiz_modal__question">True or False: The Nightingale Pledge, an oath recited by new nurses, was written by Florence Nightingale.</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>True</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>False</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        The Pledge was composed in 1893 by a committee chaired by Lystra Gretter, another nursing pioneer, for a nurse training school in Detroit, Michigan.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://nursing.vanderbilt.edu/news/florence-nightingale-pledge/" target="_blank">https://nursing.vanderbilt.edu/news/florence-nightingale-pledge/</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_20">
+    <div class="modal__content modal__content--centered">
+      <h1>Question 5 of 5</h1>
+      <p class="quiz_modal__question">International Nurses Day is celebrated on the anniversary of the birth date of Florence Nightingale. Which day is that?</p>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>June 16</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>October 12</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>November 14</span>
+        </div>
+      </div>
+      <div class="quiz_modal__answer" data-correct="yes">
+        <div class="quiz_modal__answer_inner">
+          <span class="quiz_modal__icon"><i class="fal fa-times"></i><i class="far fa-check"></i></span> 
+          <span>May 12</span>
+        </div>
+      </div>
+      <p class="quiz_modal__details">
+        Nightingale was born May 12th 1820, making 2020 the bicentennial of her birth.
+      </p>
+      <p class="quiz_modal__source">
+        Source: <a href="https://en.wikipedia.org/wiki/Florence_Nightingale" target="_blank">https://en.wikipedia.org/wiki/Florence_Nightingale</a>
+      </p>
+      <div class="quiz_modal__next_button">
+        <div>Next</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal--quiz" id="quiz_modal_results">
+    <div class="modal__content modal__content--centered">
+      <h1>Quiz Results</h1>
+      <h2>What Do You Know<br/>About Flo?</h2>
+      <h3 id="quiz_modal_results_score">YOU SCORED 3/5</h3>
+      <p>Thank you for participating!</p>
+  </section>
+
+  <nav id="close_modal_button">
+    <i class="far fa-times"></i> CLOSE
+  </nav>
+
+  
+
+
+  <script>
+    try { eval("const foo=(x=1)=>x+1"); }
+    catch (e) { 
+      document.getElementById("splash__progress").style.display = "none";
+      document.getElementById("splash__bad_browser").style.display = "block";
+    }
+  </script>
+  <script src="https://kit.fontawesome.com/6a10f0a410.js" crossorigin="anonymous"></script>
+  <script src="https://preview.babylonjs.com/babylon.js"></script>
+  <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165925500-1"></script>
+
+  <script>
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-165925500-1');
+
+
+    // Simple event pool.
+
+    const _pool = {};
+    function trigger(event, data) {
+      // console.log(event, data);
+      if([
+        'welcome',
+        'hhc',
+        'timeline',
+        'coxcomb',
+        'speaks',
+        'longfellow',
+        'pledge',
+        'quotes',
+        'quiz',
+        'share',
+        'share__facebook1',
+        'share__facebook2',
+        'share__facebook3',
+        'share__facebook4',
+        'share__facebook5',
+        'share__facebook6',
+        'share__twitter1',
+        'share__twitter2',
+        'share__twitter3',
+        'share__twitter4',
+        'share__twitter5',
+        'share__twitter6',
+        'share__linkedin1',
+        'share__linkedin2',
+        'share__linkedin3',
+        'share__linkedin4',
+        'share__linkedin5',
+        'share__linkedin6',
+        'quotes__facebook1',
+        'quotes__facebook2',
+        'quotes__facebook3',
+        'quotes__facebook4',
+        'quotes__facebook5',
+        'quotes__facebook6',
+        'quotes__facebook7',
+        'quotes__facebook8',
+        'quotes__twitter1',
+        'quotes__twitter2',
+        'quotes__twitter3',
+        'quotes__twitter4',
+        'quotes__twitter5',
+        'quotes__twitter6',
+        'quotes__twitter7',
+        'quotes__twitter8',
+        'quotes__linkedin1',
+        'quotes__linkedin2',
+        'quotes__linkedin3',
+        'quotes__linkedin4',
+        'quotes__linkedin5',
+        'quotes__linkedin6',
+        'quotes__linkedin7',
+        'quotes__linkedin8'
+      ].includes(event)) {
+        gtag('event', event);
+        // window.dataLayer.push({'pageview': event});
+      }
+
+      if(event === 'quiz__button') {
+        gtag('event', 'quiz_start');
+        // window.dataLayer.push({'pageview': 'quiz_start'});
+      }
+
+      if(!Array.isArray(_pool[event])) {
+        return;
+      }
+      _pool[event].forEach(handler => handler(data));
+    }
+    function on(event, handler) {
+      if(!Array.isArray(_pool[event])) {
+        _pool[event] = [];
+      }
+      _pool[event].push(handler);
+    }
+    function xon() {};
+
+
+    // Utils.
+
+    async function preload(url, onProgress) {
+      return new Promise(resolve => {
+        welcomeXhr = new XMLHttpRequest();
+        welcomeXhr.open("GET", url);
+        welcomeXhr.responseType = 'arraybuffer';
+        welcomeXhr.onprogress = function(e) {
+          if(e.loaded) {
+            onProgress(e);
+          }
+        }
+        welcomeXhr.onload = function(e) {
+          if (this.status == 200) {
+            resolve();
+          }
+        }
+        welcomeXhr.send()
+      });
+    }
+
+
+    // Load 3d scene.
+    let scene = null;
+    let camera = null;
+    (async function() {
+      // Set up the scene
+      const canvas = document.getElementById("renderCanvas");
+      const engine = new BABYLON.Engine(canvas, true); 
+      scene = new BABYLON.Scene(engine);
+
+      // Add mesh and set up click targets.
+      // Name meshes you want to have clicked with "active_{action name}". 
+      await BABYLON.SceneLoader.ImportMeshAsync(null, '', "./assets/scene_145.glb", scene, e => trigger('scene_loading', {loaded:e.loaded}));
+
+      // Load the welcome video
+      await preload("./assets/Welcome_v2_02.mp4", progress => trigger('welcome_loading', progress));
+      const welcomeMaterial = new BABYLON.StandardMaterial("mat", scene);
+      const videoTexture = new BABYLON.VideoTexture("video", ["assets/Welcome_v2_02.mp4"/*, "textures/babylonjs.webm"*/], scene, true, true);
+      welcomeMaterial.diffuseTexture = videoTexture;
+
+      on("enter_scene", () => {
+        videoTexture.video.play();
+      });
+
+      const welcomeMesh = scene.meshes.find(m => m.name.startsWith('welcome'));
+      welcomeMesh.material = welcomeMaterial;
+
+      scene.meshes.forEach(mesh => {
+        if([
+          'welcome', 
+          'hhc',
+          'hhc_commitment',
+          'hhc_magnolia',
+          'hhc_inspiration',
+          'hhc_didyouknow',
+          'hhc_button_1',
+          'hhc_button_2',
+          'hhc_button_3',
+          'hhc_button_4',
+          'hhc_button_5',
+          'hhc_button_6',
+          'hhc_button_7',
+          'timeline',
+          'timeline__early_years',
+          'timeline__crimean_war',
+          'timeline__crimean_war2',
+          'timeline__later_years',
+          'timeline_button_1',
+          'timeline_button_2',
+          'timeline_button_3',
+          'timeline_button_4',
+          'coxcomb',
+          'coxcomb_button_1',
+          'longfellow',
+          'longfellow__button',
+          'speaks', 
+          'speaks__play',
+          'speaks__pause',
+          'pledge',
+          'quotes',
+          'quiz',
+          'quiz__button',
+          'share',
+          'share__content',
+          'share__facebook1',
+          'share__facebook2',
+          'share__facebook3',
+          'share__facebook4',
+          'share__facebook5',
+          'share__facebook6',
+          'share__twitter1',
+          'share__twitter2',
+          'share__twitter3',
+          'share__twitter4',
+          'share__twitter5',
+          'share__twitter6',
+          'share__linkedin1',
+          'share__linkedin2',
+          'share__linkedin3',
+          'share__linkedin4',
+          'share__linkedin5',
+          'share__linkedin6',
+          'quotes__facebook1',
+          'quotes__facebook2',
+          'quotes__facebook3',
+          'quotes__facebook4',
+          'quotes__facebook5',
+          'quotes__facebook6',
+          'quotes__facebook7',
+          'quotes__facebook8',
+          'quotes__twitter1',
+          'quotes__twitter2',
+          'quotes__twitter3',
+          'quotes__twitter4',
+          'quotes__twitter5',
+          'quotes__twitter6',
+          'quotes__twitter7',
+          'quotes__twitter8',
+          'quotes__linkedin1',
+          'quotes__linkedin2',
+          'quotes__linkedin3',
+          'quotes__linkedin4',
+          'quotes__linkedin5',
+          'quotes__linkedin6',
+          'quotes__linkedin7',
+          'quotes__linkedin8',
+        ].indexOf(mesh.name) == -1) {
+          return;
+        }
+        const event = mesh.name;
+        const target = BABYLON.ActionManager.OnPickTrigger;
+        const handler = () => trigger(event);
+        const action = new BABYLON.ExecuteCodeAction(target, handler);
+        mesh.actionManager = new BABYLON.ActionManager(scene);
+        mesh.actionManager.registerAction(action);
+      });
+
+      // Floor
+      // Note: we need to render out a skybox, or multiple skyboxes, to create reflections.
+      // const groundMaterial = new BABYLON.StandardMaterial("mat", scene);
+      // const groundMesh = scene.meshes.find(m => m.name == 'ground');
+      // groundMesh.material = groundMaterial;
+
+      // Add ligt to scene
+      scene.clearColor = new BABYLON.Color3(.74, .94, 1);
+      const light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+      light1.intensity = 5;
+      const light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, -1, 0), scene);
+      light2.intensity = 5;
+
+      // Add camera
+      camera = new BABYLON.FreeCamera("mousecamera", new BABYLON.Vector3(0, 0, 0), scene);
+      camera.fovmode = BABYLON.Camera.fovmode_VERTICAL_FIXED;
+      camera.fov = 1;
+      // camera.position = new BABYLON.Vector3(-2.68, 2.00, 10.47);
+      camera.position = new BABYLON.Vector3(-2.68, 3.00, 10.47);
+      // camera.rotation = new BABYLON.Vector3(-0.05, -0.27, 0);
+      camera.rotation = new BABYLON.Vector3(0.1, -0.27, 0);
+
+      // Camera Control
+      let cursorDown = false;
+      let initialCameraState = {x:0, y:0};
+      let cursorState = {x:0, y:0};
+
+      scene.onPointerDown = e => {
+        cursorDown = true;
+        initialCameraState.x = camera.rotation.x;
+        initialCameraState.y = camera.rotation.y;
+        cursorState.x = e.clientX;
+        cursorState.y = e.clientY;
+      };
+      scene.onPointerUp = () => cursorDown = false;
+      scene.onPointerMove = e => {
+        if(!cursorDown) {
+          return;
+        }
+        camera.rotation.x = (initialCameraState.x - (0.0015 * camera.fov) * ( e.clientY - cursorState.y )) % (2 * Math.PI);
+        camera.rotation.y = (initialCameraState.y - (0.0015 * camera.fov) * ( e.clientX - cursorState.x )) % (2 * Math.PI);
+        trigger("look", {x:camera.rotation.x, y:camera.rotation.y});
+      };
+      scene.onPrePointerObservable.add(function({event}) {
+        const delta = event.wheelDelta || -event.detail || 0;
+        if(delta) {
+          let fov = camera.fov + delta * 0.001;
+          fov = Math.max(0.15, Math.min(1, fov));
+          camera.fov = fov;
+          trigger("zoom", {delta, fov});
+        }
+      }, BABYLON.PointerEventTypes.POINTERWHEEL, false);
+      document.addEventListener('keypress', e => {
+        let pos = camera.position;
+        switch(e.key) {
+          case "a": 
+            pos.x -= 0.5;
+            break;
+          case "d": 
+            pos.x += 0.5;
+            break;
+          case "w": 
+            pos.z += 0.5;
+            break;
+          case "s": 
+            pos.z -= 0.5;
+            break;
+        }
+        // console.log(`moveCameraTo(new BABYLON.Vector3(${camera.position.x.toFixed(2)}, ${camera.position.y.toFixed(2)}, ${camera.position.z.toFixed(2)}), new BABYLON.Vector3(${camera.rotation.x.toFixed(2)}, ${camera.rotation.y.toFixed(2)}, 0))`);
+      });
+
+      // Camera Animations
+      const easeInOut = new BABYLON.CubicEase();
+      easeInOut.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+      const easeOut = new BABYLON.CubicEase();
+      easeOut.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEOUT);
+      const cameraPositionAnim = new BABYLON.Animation('cameraPositionAnim', 'position', 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+      cameraPositionAnim.setEasingFunction(easeOut);
+      const cameraRotationAnim = new BABYLON.Animation('cameraRotationAnim', 'rotation', 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+      cameraRotationAnim.setEasingFunction(easeOut);
+      const cameraFOVAnim = new BABYLON.Animation('cameraFOVAnim', 'fov', 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+      cameraFOVAnim.setEasingFunction(easeInOut);
+      camera.animations = [cameraPositionAnim, cameraRotationAnim, cameraFOVAnim];
+
+      // Render the scene
+      engine.runRenderLoop(() => scene.render());
+      window.addEventListener("resize", () => engine.resize());
+
+      // Trigger loaded.
+      trigger("scene_ready");
+    }());
+    
+  
+    
+
+
+    // Splash screen
+
+    const loadTotal = (17 + 44) * 1000000;
+    let sceneLoaded = 0;
+    let welcomeLoaded = 0;
+
+    on("scene_loading", ({loaded}) => {
+      sceneLoaded = loaded;
+      document.getElementById("splash__progress_bar__progress").style.width = 100 * ((sceneLoaded + welcomeLoaded) / loadTotal) + "%";
+    });
+    on("welcome_loading", ({loaded}) => {
+      welcomeLoaded = loaded;
+      document.getElementById("splash__progress_bar__progress").style.width = 100 * ((sceneLoaded + welcomeLoaded) / loadTotal) + "%";
+    });
+
+    on("scene_ready", () => {
+      document.getElementById("splash__progress_bar").style.display = "none";
+      document.getElementById("splash__enter_button").style.display = "flex";
+    });
+
+    on("enter_scene", () => {
+      document.getElementById("splash").style.transition = "transform 800ms ease-in, opacity 400ms ease-in 400ms";
+      document.getElementById("splash").style.transform = "scale(3)";
+      document.getElementById("splash").style.opacity = 0;
+
+      moveCameraTo(new BABYLON.Vector3(-3.68, 2.00, 15.47), new BABYLON.Vector3(-0.05, -0.27, 0));
+      setTimeout(() => {
+        document.getElementById("splash").style.display = "none";
+      }, 800);
+    });
+
+    document.getElementById("splash__enter_button").addEventListener("click", () => trigger("enter_scene"));  
+    
+
+  
+
+
+
+    // Nav bar.
+    
+    const mapActive = "welcome";
+    function resetMap() {
+      document.getElementById("nav__map__pledge").style.fill = null;
+      document.getElementById("nav__map__longfellow").style.fill = null;
+      document.getElementById("nav__map__speaks").style.fill = null;
+      document.getElementById("nav__map__quiz").style.fill = null;
+      document.getElementById("nav__map__share").style.fill = null;
+      document.getElementById("nav__map__quotes").style.fill = null;
+      document.getElementById("nav__map__hhc").style.fill = null;
+      document.getElementById("nav__map__welcome").style.fill = null;
+      document.getElementById("nav__map__coxcomb").style.fill = null;
+      document.getElementById("nav__map__timeline").style.fill = null;
+      document.getElementById("nav__map__center").style.fill = null;
+    }
+
+    document.getElementById("nav__map__pledge").addEventListener("click", e => trigger("pledge"));
+    document.getElementById("nav__map__longfellow").addEventListener("click", e => trigger("longfellow"));
+    document.getElementById("nav__map__speaks").addEventListener("click", e => trigger("speaks"));
+    document.getElementById("nav__map__quiz").addEventListener("click", e => trigger("quiz"));
+    document.getElementById("nav__map__share").addEventListener("click", e => trigger("share"));
+    document.getElementById("nav__map__quotes").addEventListener("click", e => trigger("quotes"));
+    document.getElementById("nav__map__hhc").addEventListener("click", e => trigger("hhc"));
+    document.getElementById("nav__map__welcome").addEventListener("click", e => trigger("welcome"));
+    document.getElementById("nav__map__coxcomb").addEventListener("click", e => trigger("coxcomb"));
+    document.getElementById("nav__map__timeline").addEventListener("click", e => trigger("timeline"));
+    document.getElementById("nav__map__center").addEventListener("click", e => trigger("center"));
+
+
+
+    on("pledge", () => {
+      resetMap();
+      document.getElementById("nav__map__pledge").style.fill = "#cb007b";
+    });
+    on("longfellow", () => {
+      resetMap();
+      document.getElementById("nav__map__longfellow").style.fill = "#cb007b";
+    });
+    on("speaks", () => {
+      resetMap();
+      document.getElementById("nav__map__speaks").style.fill = "#cb007b";
+    });
+    on("quiz", () => {
+      resetMap();
+      document.getElementById("nav__map__quiz").style.fill = "#cb007b";
+    });
+    on("share", () => {
+      resetMap();
+      document.getElementById("nav__map__share").style.fill = "#cb007b";
+    });
+    on("quotes", () => {
+      resetMap();
+      document.getElementById("nav__map__quotes").style.fill = "#cb007b";
+    });
+    on("hhc", () => {
+      resetMap();
+      document.getElementById("nav__map__hhc").style.fill = "#cb007b";
+    });
+    on("welcome", () => {
+      resetMap();
+      document.getElementById("nav__map__welcome").style.fill = "#cb007b";
+    });
+    on("coxcomb", () => {
+      resetMap();
+      document.getElementById("nav__map__coxcomb").style.fill = "#cb007b";
+    });
+    on("timeline", () => {
+      resetMap();
+      document.getElementById("nav__map__timeline").style.fill = "#cb007b";
+    });
+    on("center", () => {
+      resetMap();
+      document.getElementById("nav__map__center").style.fill = "#cb007b";
+    });
+
+    resetMap();
+    document.getElementById("nav__map__welcome").style.fill = "#cb007b";
+
+
+
+
+
+    // Menu
+
+    function resetMenu() {
+      document.getElementById("nav__welcome").style.color = null;
+      document.getElementById("nav__hhc").style.color = null;
+      document.getElementById("nav__timeline").style.color = null;
+      document.getElementById("nav__coxcomb").style.color = null;
+      document.getElementById("nav__speaks").style.color = null;
+      document.getElementById("nav__longfellow").style.color = null;
+      document.getElementById("nav__pledge").style.color = null;
+      document.getElementById("nav__quotes").style.color = null;
+      document.getElementById("nav__quiz").style.color = null;
+      document.getElementById("nav__share").style.color = null;
+      document.getElementById("nav__current").innerHTML = "";
+    }
+
+    on("enter_scene", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "Welcome Message";
+      document.getElementById("nav__welcome").style.color = "white";
+      // document.getElementById("open_menu_button").style.display = "block";
+      document.getElementById("nav").style.right = "0px";
+      document.getElementById("open_menu_button").style.display = "none";
+    });
+
+    on("show_menu", () => {
+      document.getElementById("nav").style.right = "0px";
+      document.getElementById("open_menu_button").style.display = "none";
+    });
+
+    on("hide_menu", () => {
+      document.getElementById("nav").style.right = "-232px";
+      document.getElementById("open_menu_button").style.display = "block";
+    });
+
+    on("center", () => {
+      resetMenu();
+    });
+
+    on("welcome", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "Welcome Message";
+      document.getElementById("nav__welcome").style.color = "white";
+    });
+    on("hhc", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "Eisai’s Pursuit of <em>hhc</em>";
+      document.getElementById("nav__hhc").style.color = "white";
+    });
+    on("timeline", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "Nightingale’s Life";
+      document.getElementById("nav__timeline").style.color = "white";
+    });
+    on("coxcomb", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "Florence Nightingale –<br/>Graphic Designer";
+      document.getElementById("nav__coxcomb").style.color = "white";
+    });
+    on("speaks", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "Longfellow and the Lady";
+      document.getElementById("nav__speaks").style.color = "white";
+    });
+    on("longfellow", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "The Lady Speaks";
+      document.getElementById("nav__longfellow").style.color = "white";
+    });
+    on("pledge", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "The Nightingale Pledge";
+      document.getElementById("nav__pledge").style.color = "white";
+    });
+    on("quotes", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "Quotable Flo";
+      document.getElementById("nav__quotes").style.color = "white";
+    });
+    on("quiz", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "“What Do You Know<br/>About Flo?” Quiz";
+      document.getElementById("nav__quiz").style.color = "white";
+    });
+    on("share", () => {
+      resetMenu();
+      document.getElementById("nav__current").innerHTML = "Sharing Station";
+      document.getElementById("nav__share").style.color = "white";
+    });
+
+    document.getElementById("open_menu_button").addEventListener("click", () => trigger("show_menu"));
+    document.getElementById("close_menu_button").addEventListener("click", () => trigger("hide_menu"));
+
+    document.getElementById("nav__welcome").addEventListener("click", () => trigger("welcome"));
+    document.getElementById("nav__hhc").addEventListener("click", () => trigger("hhc"));
+    document.getElementById("nav__timeline").addEventListener("click", () => trigger("timeline"));
+    document.getElementById("nav__coxcomb").addEventListener("click", () => trigger("coxcomb"));
+    document.getElementById("nav__speaks").addEventListener("click", () => trigger("speaks"));
+    document.getElementById("nav__longfellow").addEventListener("click", () => trigger("longfellow"));
+    document.getElementById("nav__pledge").addEventListener("click", () => trigger("pledge"));
+    document.getElementById("nav__quotes").addEventListener("click", () => trigger("quotes"));
+    document.getElementById("nav__quiz").addEventListener("click", () => trigger("quiz"));
+    document.getElementById("nav__share").addEventListener("click", () => trigger("share"));
+    
+    document.getElementById("nav__map__pledge").addEventListener("mouseenter", e => trigger("pledge_mouseenter"));
+    document.getElementById("nav__map__pledge").addEventListener("mouseleave", e => trigger("pledge_mouseleave"));
+    document.getElementById("nav__map__longfellow").addEventListener("mouseenter", e => trigger("longfellow_mouseenter"));
+    document.getElementById("nav__map__longfellow").addEventListener("mouseleave", e => trigger("longfellow_mouseleave"));
+    document.getElementById("nav__map__speaks").addEventListener("mouseenter", e => trigger("speaks_mouseenter"));
+    document.getElementById("nav__map__speaks").addEventListener("mouseleave", e => trigger("speaks_mouseleave"));
+    document.getElementById("nav__map__quiz").addEventListener("mouseenter", e => trigger("quiz_mouseenter"));
+    document.getElementById("nav__map__quiz").addEventListener("mouseleave", e => trigger("quiz_mouseleave"));
+    document.getElementById("nav__map__share").addEventListener("mouseenter", e => trigger("share_mouseenter"));
+    document.getElementById("nav__map__share").addEventListener("mouseleave", e => trigger("share_mouseleave"));
+    document.getElementById("nav__map__quotes").addEventListener("mouseenter", e => trigger("quotes_mouseenter"));
+    document.getElementById("nav__map__quotes").addEventListener("mouseleave", e => trigger("quotes_mouseleave"));
+    document.getElementById("nav__map__hhc").addEventListener("mouseenter", e => trigger("hhc_mouseenter"));
+    document.getElementById("nav__map__hhc").addEventListener("mouseleave", e => trigger("hhc_mouseleave"));
+    document.getElementById("nav__map__welcome").addEventListener("mouseenter", e => trigger("welcome_mouseenter"));
+    document.getElementById("nav__map__welcome").addEventListener("mouseleave", e => trigger("welcome_mouseleave"));
+    document.getElementById("nav__map__coxcomb").addEventListener("mouseenter", e => trigger("coxcomb_mouseenter"));
+    document.getElementById("nav__map__coxcomb").addEventListener("mouseleave", e => trigger("coxcomb_mouseleave"));
+    document.getElementById("nav__map__timeline").addEventListener("mouseenter", e => trigger("timeline_mouseenter"));
+    document.getElementById("nav__map__timeline").addEventListener("mouseleave", e => trigger("timeline_mouseleave"));
+    document.getElementById("nav__map__center").addEventListener("mouseenter", e => trigger("center_mouseenter"));
+    document.getElementById("nav__map__center").addEventListener("mouseleave", e => trigger("center_mouseleave"));
+
+
+    on("pledge_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "The Nightingale Pledge";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("pledge_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("longfellow_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "Longfellow and the Lady";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("longfellow_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("speaks_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "The Lady Speaks";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("speaks_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("quiz_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "&quot;What Do You Know <br/>About Flo?&quot; Quiz";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("quiz_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("share_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "Sharing Station";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("share_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("quotes_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "Quotable Flo";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("quotes_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("hhc_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "Eisai’s Pursuit of <em>hhc</em>";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("hhc_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("welcome_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "Welcome Message";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("welcome_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("coxcomb_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "Florence Nightingale – <br/>Graphic Designer";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("coxcomb_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("timeline_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "Nightingale’s Life";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("timeline_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+    on("center_mouseenter", () => {
+      document.getElementById("nav__current--hover").innerHTML = "";
+      document.getElementById("nav__current--hover").style.display = "block";
+      document.getElementById("nav__current").style.display = "none";
+    });
+    on("center_mouseleave", () => {
+      document.getElementById("nav__current--hover").style.display = "none";
+      document.getElementById("nav__current").style.display = "block";
+    });
+
+
+
+    // Fullscreen control
+    
+    document.getElementById("expand_menu_button").addEventListener("click", () => {
+      document.getElementById("expand_menu_button").style.display = "none";
+      document.getElementById("contract_menu_button").style.display = "block";
+      document.documentElement.requestFullscreen();
+    });
+    document.getElementById("contract_menu_button").addEventListener("click", () => {
+      document.getElementById("expand_menu_button").style.display = "block";
+      document.getElementById("contract_menu_button").style.display = "none";
+      document.exitFullscreen();
+    });
+
+
+
+    // Keyboard Navigation
+
+
+    let current = 0;
+    let all = ["welcome", "hhc", "hhc_inspiration", "hhc_didyouknow", "hhc_commitment", "hhc_magnolia", "timeline", "timeline__early_years", "timeline__crimean_war", "timeline__crimean_war2", "timeline__later_years", "coxcomb", "longfellow", "speaks", "pledge", "quotes", "quiz", "share"];
+
+    // when an arrow is pressed, change current and trigger navigation.
+    document.addEventListener('keydown', function(e) {
+      let fov;
+      switch(e.key) {
+        case "ArrowRight":
+          current += 1;
+          if(current >= all.length) {
+            current = 0;
+          }
+          trigger(all[current]);
+          break;
+        case "ArrowLeft": 
+          current -= 1;
+          if(current < 0) {
+            current = all.length - 1;
+          }
+          trigger(all[current]);
+          break;
+        case "ArrowDown":
+          fov = camera.fov + 0.05;
+          fov = Math.min(1, fov);
+          camera.fov = fov;
+          trigger("zoom", {delta:0.1, fov});
+          break;
+        case "ArrowUp": 
+          fov = camera.fov - 0.05;
+          fov = Math.max(0.15, fov);
+          camera.fov = fov;
+          trigger("zoom", {delta:-0.1, fov});
+          break;
+      }
+    });
+
+    // on navigation, keep current up to date
+    all.forEach((event, i) => on(event, () => current = i));
+
+
+
+
+    // Navigate the scene
+
+    function hideMesh(name) {
+      const mesh = scene.meshes.find(m => m.name === name);
+      if(mesh) {
+        mesh.isVisible = false;
+      }
+    }
+    function showMesh(name) {
+      const mesh = scene.meshes.find(m => m.name === name);
+      if(mesh) {
+        mesh.isVisible = true;
+      }
+    }
+    let runningCameraAnimation = null;
+    function moveCameraTo(position, rotation) {
+      if(runningCameraAnimation) {
+        runningCameraAnimation.stop();
+      }
+
+      if(camera.rotation.y - rotation.y > Math.PI) {
+        rotation.y += Math.PI*2;
+      }
+      if(camera.rotation.y - rotation.y < -Math.PI) {
+        rotation.y -= Math.PI*2;
+      }
+
+      const [positionAnimation, rotationAnimation, fovAnimation] = camera.animations;
+      positionAnimation.setKeys([
+        {frame:30, value:camera.position},
+        {frame:80, value:position}
+      ]);
+      rotationAnimation.setKeys([
+        {frame:0, value:camera.rotation},
+        {frame:20, value:rotation}
+      ]);
+      fovAnimation.setKeys([
+        {frame:30, value:camera.fov},
+        {frame:80, value:0.9}
+      ]);
+      runningCameraAnimation = scene.beginAnimation(camera, 0, 100, false);
+    }
+
+    on("look", () => {
+      if(runningCameraAnimation) {
+        runningCameraAnimation.stop();
+      }
+    });
+
+
+    function resetMeshes() {
+      hideMesh("quiz__content");
+      hideMesh("quiz__button");
+      hideMesh("hhc_commitment");
+      hideMesh("hhc_magnolia");
+      hideMesh("hhc_inspiration");
+      hideMesh("hhc_didyouknow");
+      hideMesh("hhc_button_1");
+      hideMesh("hhc_button_2");
+      hideMesh("hhc_button_3");
+      hideMesh("hhc_button_4");
+      hideMesh("hhc_button_5");
+      hideMesh("hhc_button_6");
+      hideMesh("hhc_button_7");
+      hideMesh("timeline__early_years");
+      hideMesh("timeline__crimean_war");
+      hideMesh("timeline__crimean_war2");
+      hideMesh("timeline__later_years");
+      hideMesh("timeline_button_1");
+      hideMesh("timeline_button_2");
+      hideMesh("timeline_button_3");
+      hideMesh("timeline_button_4");
+      hideMesh("coxcomb__content");
+      hideMesh("coxcomb_button_1");
+      hideMesh("longfellow__content");
+      hideMesh("longfellow__button");
+      hideMesh("speaks__content");
+      hideMesh("speaks__record");
+      hideMesh("speaks__record_playing");
+      hideMesh("speaks__play");
+      hideMesh("speaks__pause");
+      hideMesh("pledge_content");
+      hideMesh("quotes_content");
+      hideMesh("quotes__facebook1");
+      hideMesh("quotes__facebook2");
+      hideMesh("quotes__facebook3");
+      hideMesh("quotes__facebook4");
+      hideMesh("quotes__facebook5");
+      hideMesh("quotes__facebook6");
+      hideMesh("quotes__facebook7");
+      hideMesh("quotes__facebook8");
+      hideMesh("quotes__twitter1");
+      hideMesh("quotes__twitter2");
+      hideMesh("quotes__twitter3");
+      hideMesh("quotes__twitter4");
+      hideMesh("quotes__twitter5");
+      hideMesh("quotes__twitter6");
+      hideMesh("quotes__twitter7");
+      hideMesh("quotes__twitter8");
+      hideMesh("quotes__linkedin1");
+      hideMesh("quotes__linkedin2");
+      hideMesh("quotes__linkedin3");
+      hideMesh("quotes__linkedin4");
+      hideMesh("quotes__linkedin5");
+      hideMesh("quotes__linkedin6");
+      hideMesh("quotes__linkedin7");
+      hideMesh("quotes__linkedin8");
+
+      hideMesh("share__content");
+      hideMesh("share__facebook1");
+      hideMesh("share__facebook2");
+      hideMesh("share__facebook3");
+      hideMesh("share__facebook4");
+      hideMesh("share__facebook5");
+      hideMesh("share__facebook6");
+      hideMesh("share__twitter1");
+      hideMesh("share__twitter2");
+      hideMesh("share__twitter3");
+      hideMesh("share__twitter4");
+      hideMesh("share__twitter5");
+      hideMesh("share__twitter6");
+      hideMesh("share__linkedin1");
+      hideMesh("share__linkedin2");
+      hideMesh("share__linkedin3");
+      hideMesh("share__linkedin4");
+      hideMesh("share__linkedin5");
+      hideMesh("share__linkedin6");
+
+      showMesh("hhc");
+      showMesh("timeline");
+      showMesh("coxcomb");
+      showMesh("longfellow");
+      showMesh("speaks");
+      showMesh("pledge");
+      showMesh("quotes");
+      showMesh("quiz");
+      showMesh("share");
+    }
+
+    on("scene_ready", () => {
+      resetMeshes();
+    });
+
+    on("center", () => {
+      resetMeshes();
+      moveCameraTo(new BABYLON.Vector3(0, 2.00, 0), new BABYLON.Vector3(-0.05, -0.27, 0));
+    });
+
+    on("welcome", () => {
+      resetMeshes();
+      moveCameraTo(new BABYLON.Vector3(-3.68, 2.00, 15.47), new BABYLON.Vector3(-0.05, -0.27, 0));
+    });
+
+    on("hhc", () => {
+      resetMeshes();
+      hideMesh("hhc");
+      showMesh("hhc_commitment");
+      showMesh("hhc_magnolia");
+      showMesh("hhc_inspiration");
+      showMesh("hhc_didyouknow");
+      showMesh("hhc_button_1");
+      showMesh("hhc_button_2");
+      showMesh("hhc_button_3");
+      showMesh("hhc_button_4");
+      showMesh("hhc_button_5");
+      showMesh("hhc_button_6");
+      showMesh("hhc_button_7");
+      moveCameraTo(new BABYLON.Vector3(3.81, 2.00, 5.49), new BABYLON.Vector3(-0.03, 0.51, 0));
+    });
+
+    on("hhc_inspiration", () => {
+      resetMeshes();
+      hideMesh("hhc");
+      showMesh("hhc_commitment");
+      showMesh("hhc_magnolia");
+      showMesh("hhc_inspiration");
+      showMesh("hhc_didyouknow");
+      showMesh("hhc_button_1");
+      showMesh("hhc_button_2");
+      showMesh("hhc_button_3");
+      showMesh("hhc_button_4");
+      showMesh("hhc_button_5");
+      showMesh("hhc_button_6");
+      showMesh("hhc_button_7");
+      moveCameraTo(new BABYLON.Vector3(2.24, 2.00, 18.97), new BABYLON.Vector3(-0.11, 0.15, 0));
+      // moveCameraTo(new BABYLON.Vector3(3.31, 2.00, 12.99), new BABYLON.Vector3(-0.11, 0.25, 0));
+    });
+
+    on("hhc_didyouknow", () => {
+      resetMeshes();
+      hideMesh("hhc");
+      showMesh("hhc_commitment");
+      showMesh("hhc_magnolia");
+      showMesh("hhc_inspiration");
+      showMesh("hhc_didyouknow");
+      showMesh("hhc_button_1");
+      showMesh("hhc_button_2");
+      showMesh("hhc_button_3");
+      showMesh("hhc_button_4");
+      showMesh("hhc_button_5");
+      showMesh("hhc_button_6");
+      showMesh("hhc_button_7");
+      moveCameraTo(new BABYLON.Vector3(6.31, 2.00, 17.49), new BABYLON.Vector3(-0.11, 0.39, 0));
+      // moveCameraTo(new BABYLON.Vector3(3.31, 2.00, 12.99), new BABYLON.Vector3(-0.11, 0.25, 0));
+    });
+
+    on("hhc_commitment", () => {
+      resetMeshes();
+      hideMesh("hhc");
+      showMesh("hhc_commitment");
+      showMesh("hhc_magnolia");
+      showMesh("hhc_inspiration");
+      showMesh("hhc_didyouknow");
+      showMesh("hhc_button_1");
+      showMesh("hhc_button_2");
+      showMesh("hhc_button_3");
+      showMesh("hhc_button_4");
+      showMesh("hhc_button_5");
+      showMesh("hhc_button_6");
+      showMesh("hhc_button_7");
+      // moveCameraTo(new BABYLON.Vector3(8.81, 2.00, 10.49), new BABYLON.Vector3(-0.10, 0.79, 0));
+      moveCameraTo(new BABYLON.Vector3(11.31, 2.00, 14.49), new BABYLON.Vector3(-0.14, 0.68, 0))
+    });
+
+    on("hhc_magnolia", () => {
+      resetMeshes();
+      hideMesh("hhc");
+      showMesh("hhc_commitment");
+      showMesh("hhc_magnolia");
+      showMesh("hhc_inspiration");
+      showMesh("hhc_didyouknow");
+      showMesh("hhc_button_1");
+      showMesh("hhc_button_2");
+      showMesh("hhc_button_3");
+      showMesh("hhc_button_4");
+      showMesh("hhc_button_5");
+      showMesh("hhc_button_6");
+      showMesh("hhc_button_7");
+      moveCameraTo(new BABYLON.Vector3(15.31, 2.00, 11.99), new BABYLON.Vector3(-0.09, 0.94, 0))
+      // moveCameraTo(new BABYLON.Vector3(8.81, 2.00, 10.49), new BABYLON.Vector3(-0.10, 0.79, 0));
+    });
+
+    on("timeline", () => {
+      resetMeshes();
+      showMesh("timeline__early_years");
+      showMesh("timeline__crimean_war");
+      showMesh("timeline__crimean_war2");
+      showMesh("timeline__later_years");
+      showMesh("timeline_button_1");
+      showMesh("timeline_button_2");
+      showMesh("timeline_button_3");
+      showMesh("timeline_button_4");
+      hideMesh("timeline");
+      moveCameraTo(new BABYLON.Vector3(2.82, 2.00, 0.47), new BABYLON.Vector3(-0.02, 1.58, 0));
+    });
+
+    on("timeline__early_years", () => {
+      resetMeshes();
+      showMesh("timeline__early_years");
+      showMesh("timeline__crimean_war");
+      showMesh("timeline__crimean_war2");
+      showMesh("timeline__later_years");
+      showMesh("timeline_button_1");
+      showMesh("timeline_button_2");
+      showMesh("timeline_button_3");
+      showMesh("timeline_button_4");
+      hideMesh("timeline");
+      moveCameraTo(new BABYLON.Vector3(18.82, 2.00, 8.97), new BABYLON.Vector3(-0.11, 1.12, 0))
+    });
+
+    on("timeline__crimean_war", () => {
+      resetMeshes();
+      showMesh("timeline__early_years");
+      showMesh("timeline__crimean_war");
+      showMesh("timeline__crimean_war2");
+      showMesh("timeline__later_years");
+      showMesh("timeline_button_1");
+      showMesh("timeline_button_2");
+      showMesh("timeline_button_3");
+      showMesh("timeline_button_4");
+      hideMesh("timeline");
+      moveCameraTo(new BABYLON.Vector3(20.22, 2.00, 4.27), new BABYLON.Vector3(-0.09, 1.34, 0))
+    });
+
+    on("timeline__crimean_war2", () => {
+      resetMeshes();
+      showMesh("timeline__early_years");
+      showMesh("timeline__crimean_war");
+      showMesh("timeline__crimean_war2");
+      showMesh("timeline__later_years");
+      showMesh("timeline_button_1");
+      showMesh("timeline_button_2");
+      showMesh("timeline_button_3");
+      showMesh("timeline_button_4");
+      hideMesh("timeline");
+      moveCameraTo(new BABYLON.Vector3(20.72, 2.00, -0.73), new BABYLON.Vector3(-0.12, 1.65, 0))
+    });
+
+    on("timeline__later_years", () => {
+      resetMeshes();
+      showMesh("timeline__early_years");
+      showMesh("timeline__crimean_war");
+      showMesh("timeline__crimean_war2");
+      showMesh("timeline__later_years");
+      showMesh("timeline_button_1");
+      showMesh("timeline_button_2");
+      showMesh("timeline_button_3");
+      showMesh("timeline_button_4");
+      hideMesh("timeline");
+      moveCameraTo(new BABYLON.Vector3(20.22, 2.00, -7.13), new BABYLON.Vector3(-0.11, 1.94, 0))
+    });
+
+    on("coxcomb", () => {
+      resetMeshes();
+      hideMesh("coxcomb");
+      showMesh("coxcomb__content");
+      showMesh("coxcomb_button_1");
+      moveCameraTo(new BABYLON.Vector3(16.22, 2.00, -16.63), new BABYLON.Vector3(-0.02, 2.35, 0));
+    });
+
+    on("longfellow", () => {
+      resetMeshes();
+      hideMesh("longfellow");
+      showMesh("longfellow__content");
+      showMesh("longfellow__button");
+      moveCameraTo(new BABYLON.Vector3(5.22, 2.00, -17.13), new BABYLON.Vector3(-0.05, 2.91, 0));
+    });
+
+    on("speaks", () => {
+      resetMeshes();
+      hideMesh("speaks");
+      showMesh("speaks__content");
+      showMesh("speaks__record");
+      hideMesh("speaks__record_playing");
+      showMesh("speaks__play");
+      hideMesh("speaks__pause");
+      moveCameraTo(new BABYLON.Vector3(-3.78, 2.00, -15.13), new BABYLON.Vector3(-0.04, -2.84, 0));
+    });
+
+    on("pledge", () => {
+      resetMeshes();
+      hideMesh("pledge");
+      showMesh("pledge_content");
+      moveCameraTo(new BABYLON.Vector3(-10.28, 2.00, -11.13), new BABYLON.Vector3(-0.08, 3.97, 0))
+    });
+
+    on("quotes", () => {
+      resetMeshes();
+      hideMesh("quotes");
+      showMesh("quotes_content");
+      showMesh("quotes__facebook1");
+      showMesh("quotes__facebook2");
+      showMesh("quotes__facebook3");
+      showMesh("quotes__facebook4");
+      showMesh("quotes__facebook5");
+      showMesh("quotes__facebook6");
+      showMesh("quotes__facebook7");
+      showMesh("quotes__facebook8");
+      showMesh("quotes__twitter1");
+      showMesh("quotes__twitter2");
+      showMesh("quotes__twitter3");
+      showMesh("quotes__twitter4");
+      showMesh("quotes__twitter5");
+      showMesh("quotes__twitter6");
+      showMesh("quotes__twitter7");
+      showMesh("quotes__twitter8");
+      showMesh("quotes__linkedin1");
+      showMesh("quotes__linkedin2");
+      showMesh("quotes__linkedin3");
+      showMesh("quotes__linkedin4");
+      showMesh("quotes__linkedin5");
+      showMesh("quotes__linkedin6");
+      showMesh("quotes__linkedin7");
+      showMesh("quotes__linkedin8");
+      moveCameraTo(new BABYLON.Vector3(-17.28, 2.00, -5.13), new BABYLON.Vector3(-0.09, 4.49, 0))
+    });
+
+    on("quiz", () => {
+      resetMeshes();
+      hideMesh('quiz');
+      showMesh('quiz__content');
+      showMesh('quiz__button');
+      moveCameraTo(new BABYLON.Vector3(-11.18, 2.00, 2.97), new BABYLON.Vector3(-0.03, 4.97, 0))
+    });
+
+    on("share", () => {
+      resetMeshes();
+      hideMesh("share");
+      showMesh("share__content");
+      showMesh("share__facebook1");
+      showMesh("share__facebook2");
+      showMesh("share__facebook3");
+      showMesh("share__facebook4");
+      showMesh("share__facebook5");
+      showMesh("share__facebook6");
+      showMesh("share__twitter1");
+      showMesh("share__twitter2");
+      showMesh("share__twitter3");
+      showMesh("share__twitter4");
+      showMesh("share__twitter5");
+      showMesh("share__twitter6");
+      showMesh("share__linkedin1");
+      showMesh("share__linkedin2");
+      showMesh("share__linkedin3");
+      showMesh("share__linkedin4");
+      showMesh("share__linkedin5");
+      showMesh("share__linkedin6");
+      // moveCameraTo(new BABYLON.Vector3(-10.68, 2.00, 9.47), new BABYLON.Vector3(-0.05, -0.75, 0))
+      moveCameraTo(new BABYLON.Vector3(-11.68, 2.00, 11.47), new BABYLON.Vector3(-0.06, 5.49, 0))
+    });
+
+    [
+      {trigger:'share', index:1, name:"birthday1", text:"Happy 200th Birthday to a Nursing Legend. Florence Nightingale 1820-2020"},
+      {trigger:'share', index:2, name:"birthday2", text:"Happy 200th Birthday to Florence Nightingale. A woman ahead of her time. 1820-2020"},
+      {trigger:'share', index:3, name:"birthday3", text:"Happy 200th Birthday to the Original Heroic Nurse! Florence Nightingale May 12, 1820"},
+      {trigger:'share', index:4, name:"awesomeness", text:"Nurses, I am in awe of your awesomeness. 2020 The international Year of the Nurse"},
+      {trigger:'share', index:5, name:"humble", text:"Thank you nurses. I am humbled by the difference you make. 2020 The International Year of the Nurse"},
+      {trigger:'share', index:6, name:"shoutout", text:"A BIG Shout-Out to Our True Heroes! 2020 The International Year of the Nurse"},
+      {trigger:'quotes', index:1, name:"howverylittle", text:"How very little can be done under the spirit of fear. - Florence Nightingale"},
+      {trigger:'quotes', index:2, name:"neverloseanopportunity", text:"Never lose an opportunity of urging a practical beginning, however small, for it is wonderful how often in such matters the mustard-seed germinates and roots itself. - Florence Nightingale"},
+      {trigger:'quotes', index:3, name:"livelife", text:"Live life when you have it. Life is a splendid gift - there is nothing small about it. - Florence Nightingale"},
+      {trigger:'quotes', index:4, name:"thegreatestheroes", text:"The greatest heroes are those who do their duty in the daily grind of domestic affairs whilst the world whirls. - Florence Nightingale"},
+      {trigger:'quotes', index:5, name:"ithinkones", text:"I think one's feelings waste themselves in words; they ought all to be distilled into actions - and into actions which bring results. - Florence Nightingale"},
+      {trigger:'quotes', index:6, name:"iattribute", text:"I attribute my success to this - I never gave or took an excuse. - Florence Nightingale"},
+      {trigger:'quotes', index:7, name:"weretherenone", text:"Were there none who were discontented with what they have, the world would never reach anything better. - Florence Nightingale"},
+      {trigger:'quotes', index:8, name:"tobeincharge", text:"To be 'in charge' is certainly not only to carry out the proper measures yourself but to see that everyone else does so too. - Florence Nightingale"},
+    ].forEach(i => {
+      on(`${i.trigger}__twitter${i.index}`, () => {
+        const text = i.text;
+        const url = location.href + `share/${i.name}.html`;
+        window.open(
+          `http://twitter.com/share?text=${text}&url=${url}`,
+          "Twitter",
+          "toolbar=0,status=0,resizable=1,width=640,height=300"
+        );
+      });
+
+      on(`${i.trigger}__facebook${i.index}`, () => {
+        const url = location.href + `share/${i.name}.html`;
+        const img = location.href + `share/assets/${i.name}.jpg`;
+        const title = 'Florence Nightengale Gallery';
+        const summary = i.text;
+        const shareUrl = "http://www.facebook.com/sharer/sharer.php?s=100&p[url]=" + encodeURI(url) + "&p[images][0]=" + encodeURI(img) + "&p[title]=" + encodeURI(title) + "&p[summary]=" + encodeURI(summary);
+        window.open(
+          shareUrl,
+          "Facebook",
+          "toolbar=0,status=0,resizable=1,width=640,height=300"
+        );
+      });
+
+      on(`${i.trigger}__linkedin${i.index}`, () => {
+        const url = encodeURI(location.href + `share/${i.name}.html`);
+        const img = encodeURI(location.href + `assets/${i.name}.jpg`);
+        const title = encodeURI('Florence Nightengale Gallery');
+        const summary = encodeURI(i.text);
+        const source = encodeURI(location.href);
+        const shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}&summary=${summary}&source=LinkedIn`;
+        window.open(
+          shareUrl,
+          "Linked In",
+          "toolbar=0,status=0,resizable=1,width=640,height=650"
+        );
+      });
+    });
+
+    on("scene_ready", () => {
+      let isPlaying = false;
+      const recordMesh = scene.meshes.find(m => m.name === 'speaks__record_playing');
+      const recordAudio = new Audio('./assets/speaks.mp3');
+
+      on("speaks__play", () => {
+        isPlaying = true;
+        recordAudio.play();
+        hideMesh("speaks__record");
+        showMesh("speaks__record_playing");
+        hideMesh("speaks__play");
+        showMesh("speaks__pause");
+      });
+
+      const pause = () => {
+        recordAudio.pause();
+        isPlaying = false;
+      };
+
+      on("speaks__pause", () => {
+        pause();
+        showMesh("speaks__play");
+        hideMesh("speaks__pause");
+      });
+      on("quiz", pause);
+      on("timeline", pause);
+      on("coxcomb", pause);
+      on("longfellow", pause);
+      on("pledge", pause);
+      on("quotes", pause);
+      on("quotesshare", pause);
+      on("welcome", pause);
+      on("hhc", pause);
+
+      scene.registerBeforeRender(() => {
+        if(isPlaying) {
+          recordMesh.rotate(BABYLON.Axis.Y, Math.PI / 64, BABYLON.Space.LOCAL);
+        }
+      });
+    });
+
+    
+
+
+
+    // Modals
+
+    function hideModals() {
+      document.getElementById("close_modal_button").style.display = "none";
+      document.querySelectorAll(".modal").forEach($el => {
+        $el.style.transition = "opacity 200ms ease-in-out";
+        $el.style.opacity = 0;
+        setTimeout(() => $el.style.display = "none", 200);
+      });
+      
+      document.getElementById("nav").style.display = "block";
+    }
+
+    function showModal(id, closeButtonColor="white") {
+      console.log('showing modal', id);
+      const $el = document.getElementById(id);
+      $el.style.opacity = 0;
+      $el.style.display = "block";
+      $el.style.transition = "opacity 400ms ease-in-out";
+      setTimeout(() => $el.style.opacity = 1, 100);
+      setTimeout(() => document.getElementById("close_modal_button").style.display = "block", 300);
+      
+      document.getElementById("nav").style.display = "none";
+      document.getElementById("close_modal_button").style.color = closeButtonColor;
+    }
+
+    function switchModal(id, closeButtonColor="white") {
+      document.querySelectorAll(".modal").forEach($el => {
+        $el.style.display = "none";
+      });
+
+      const $el = document.getElementById(id);
+      $el.style.opacity = 1;
+      $el.style.display = "block";
+    }
+
+    document.getElementById("nav__about").addEventListener("click", () => showModal("about_modal"));
+    document.getElementById("nav__related").addEventListener("click", () => showModal("related_modal"));
+    
+    on("longfellow__button", () => showModal("longfellow_modal"));
+
+    document.getElementById("about__button").addEventListener("click", () => {
+      hideModals();
+      trigger("coxcomb");
+    });
+
+    on("hide_modal", hideModals);
+    document.getElementById("close_modal_button").addEventListener("click", () => trigger("hide_modal"));
+    
+    on("hhc_button_1", () => showModal("hhc__modal_1", "#424242"))
+    on("hhc_button_2", () => showModal("hhc__modal_2", "#424242"))
+    on("hhc_button_3", () => showModal("hhc__modal_3", "#424242"))
+    on("hhc_button_4", () => showModal("hhc__modal_4", "#424242"))
+    on("hhc_button_5", () => showModal("hhc__modal_5"))
+    on("hhc_button_6", () => showModal("hhc__modal_6"))
+    on("hhc_button_7", () => showModal("hhc__modal_7"))
+
+    on("timeline_button_1", () => showModal("timeline__modal_1"))
+    on("timeline_button_2", () => showModal("timeline__modal_2"))
+    on("timeline_button_3", () => showModal("timeline__modal_3"))
+    on("timeline_button_4", () => showModal("timeline__modal_4"))
+
+    on("coxcomb_button_1", () => showModal("coxcomb__modal_1"))
+
+    document.querySelector("#hhc__modal_1 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_2"));
+    document.querySelector("#hhc__modal_2 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_1"));
+    document.querySelector("#hhc__modal_2 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_3"));
+    document.querySelector("#hhc__modal_3 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_2"));
+    document.querySelector("#hhc__modal_3 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_4"));
+    document.querySelector("#hhc__modal_4 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_3"));
+
+    document.querySelector("#hhc__modal_5 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_6"));
+    document.querySelector("#hhc__modal_6 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_5"));
+    document.querySelector("#hhc__modal_6 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_7"));
+    document.querySelector("#hhc__modal_7 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_6"));
+
+    document.querySelector("#timeline__modal_1 .next").addEventListener('click', () => switchModal("timeline__modal_2"));
+    document.querySelector("#timeline__modal_2 .next").addEventListener('click', () => switchModal("timeline__modal_3"));
+    document.querySelector("#timeline__modal_3 .next").addEventListener('click', () => switchModal("timeline__modal_4"));
+    document.querySelector("#timeline__modal_2 .prev").addEventListener('click', () => switchModal("timeline__modal_1"));
+    document.querySelector("#timeline__modal_3 .prev").addEventListener('click', () => switchModal("timeline__modal_2"));
+    document.querySelector("#timeline__modal_4 .prev").addEventListener('click', () => switchModal("timeline__modal_3"));
+
+    document.querySelector("#coxcomb__modal_1 .next").addEventListener('click', () => switchModal("coxcomb__modal_2"));
+    document.querySelector("#coxcomb__modal_2 .next").addEventListener('click', () => switchModal("coxcomb__modal_3"));
+    document.querySelector("#coxcomb__modal_3 .prev").addEventListener('click', () => switchModal("coxcomb__modal_2"));
+    document.querySelector("#coxcomb__modal_2 .prev").addEventListener('click', () => switchModal("coxcomb__modal_1"));
+
+
+    
+    // Quiz
+
+
+    let totalCorrectAnswers = 0;
+    let correctAnswers = 0;
+    document.querySelectorAll(".quiz_modal__answer").forEach($answer => {
+      $answer.addEventListener('click', () => {
+        const isCorrect = $answer.getAttribute("data-correct") === "yes";
+        if(isCorrect) {
+          $answer.style.backgroundColor = "#88c968";
+          $answer.style.color = "white";
+          $answer.querySelector(".fa-check").style.display = "block";
+          correctAnswers += 1;
+          totalCorrectAnswers += 1;
+        }
+        else {
+          $answer.style.backgroundColor = "#e16964";
+          $answer.style.color = "white";
+          $answer.querySelector(".fa-times").style.display = "block";
+
+          $correctAnswer = $answer.parentElement.querySelector("[data-correct=yes]");
+          $correctAnswer.style.backgroundColor = "#88c968";
+          $correctAnswer.style.color = "white";
+          $correctAnswer.querySelector(".fa-check").style.display = "block";
+        }
+
+        $answer.parentElement.querySelector(".quiz_modal__details").style.opacity = 1;
+        $answer.parentElement.querySelector(".quiz_modal__source").style.opacity = 1;
+        $answer.parentElement.querySelector(".quiz_modal__next_button").style.opacity = 1;
+      });
+    });
+    
+    let question;
+    let quizes = [1,6,11,16];
+    for(let i = 3; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = quizes[i];
+      quizes[i] = quizes[j];
+      quizes[j] = temp;
+    }
+
+    on("quiz__button", () => {
+      correctAnswers = 0;
+      if(quizes.length == 0) {
+        document.getElementById("quiz_modal_results_score").innerText = "YOU SCORED " + totalCorrectAnswers + "/20";
+        showModal("quiz_modal_results", "#424242");
+        return;
+      }
+      question = quizes.pop();
+      showModal("quiz_modal_"+question, "#424242");
+    });
+
+    document.querySelectorAll(".quiz_modal__next_button").forEach($el => {
+      $el.addEventListener("click", () => {
+        question += 1;
+        if([6, 11, 16, 21].includes(question)) {
+          document.getElementById("quiz_modal_results_score").innerText = "YOU SCORED " + correctAnswers + "/5";
+          switchModal("quiz_modal_results", "#424242");
+          return;
+        }
+        switchModal("quiz_modal_"+question, "#424242");
+      });
+    });
+
+
+
+
+
+    // Hints
+
+    function showHint(html) {
+      const $hint = document.getElementById("hint");
+      if(html) {
+        $hint.innerHTML = html;
+      }
+      $hint.style.opacity = 1;
+      $hint.style.top = 0;
+      setTimeout(hideHint, 10000);
+    }
+
+    function hideHint() {
+      const $hint = document.getElementById("hint")
+      $hint.style.opacity = 0;
+      $hint.style.top = "20px";
+    }
+
+    on("enter_scene", () => setTimeout(() => {
+      showHint(`
+        <p><i class="far fa-mouse-pointer"></i> Use screen drag or arrow keys to look around.</p>
+        <p><i class="far fa-mouse-alt"></i> Use scroll or arrow keys to zoom in and out.</p>
+        <p><i class="far fa-hand-pointer"></i> Click on exhibit walls to explore further.</p>
+      `)
+    }, 1000));
+
+    on("timeline", () => setTimeout(() => {
+      showHint(`
+        <p><i class="far fa-hand-pointer"></i> Click a section to explore further.</p>
+      `)
+    }, 1000));
+
+    on("speaks", () => setTimeout(() => {
+      showHint(`
+        <p><i class="far fa-hand-pointer"></i> Click the play button to hear recording.</p>
+      `)
+    }, 1000));
+
+    on("quiz", () => setTimeout(() => {
+      showHint(`
+        <p><i class="far fa-hand-pointer"></i> Click + to take the quiz.</p>
+      `)
+    }, 1000));
+
+    on("hhc", () => setTimeout(() => {
+      showHint(`
+        <p><i class="far fa-hand-pointer"></i> Click +'s to explore further.</p>
+      `)
+    }, 1000));
+
+  </script>
+</body>
+</html>
