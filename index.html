@@ -423,7 +423,260 @@
       width: 100%;
       min-height: 100%;
       padding: 40px 16px 60px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: auto;
     }
+
+    .modal__content video {
+      max-width: 80vw;
+      max-height: 80vh;
+    }
+
+
+    .modal__origin {
+      display: flex;
+      flex-direction: column;
+      width: auto !important;
+      max-width: 80vw;
+      padding: 24px;
+      background-color: #fff;
+    }
+
+    .modal__content .modal__origin h1 {
+      font-family: sans-serif;
+      font-weight: normal;
+      font-size: 24px;
+      text-align: center;
+      color: black;
+      text-align: center;
+      max-width: none;
+      padding: 0;
+      margin: 0 0 40px;
+    }
+
+    .modal__origin img {
+      width: 80vw;
+    }
+
+    @media (min-width: 1300px) {
+      .modal__origin img {
+        height: 60vh;
+        width: auto;
+      }
+    }
+
+
+
+    .modal__seci {
+      display: flex;
+      flex-direction: column;
+      width: auto;
+      max-width: 80vw;
+      padding: 24px;
+      background-color: #f2f2f2;
+    }
+
+    .modal__seci .title {
+      flex: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0;
+      border: 0;
+      border-top: 1px solid #c20f83;
+      border-bottom: 1px solid #c20f83;
+      margin: 0 0 40px 0;
+      text-align: center;
+    }
+
+    .modal__content .modal__seci h1 {
+      font-family: sans-serif;
+      font-weight: normal;
+      font-size: 24px;
+      text-align: center;
+      color: #088ea7;
+      padding: 0;
+      margin: 0;
+    }
+
+    .modal__seci .row {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 1300px) {
+      .modal__seci .row {
+        display: flex;
+        flex-direction: row;
+        align-self: center;
+        margin-bottom: 40px;
+      }
+    }
+
+    .modal__seci .col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal__seci .col > div {
+      flex: 1;
+    }
+
+    @media (min-width: 1300px) {
+      .modal__seci .col {
+        width: 200px;
+        padding: 0 40px;
+      }
+    }
+
+
+    .modal__seci .left {
+      order: 1;
+    }
+    .modal__seci .image {
+      order: 3;
+    }
+    .modal__seci .right {
+      order: 2;
+    }
+
+    @media (min-width: 1300px) {
+      .modal__seci .left {
+        order: 1;
+      }
+      .modal__seci .image {
+        order: 2;
+      }
+      .modal__seci .right {
+        order: 3;
+      }
+    }
+
+
+
+    .modal__seci img {
+      width: 80vw;
+    }
+
+    @media (min-width: 1300px) {
+      .modal__seci img {
+        height: 60vh;
+        width: auto;
+      }
+    }
+
+    .modal__seci h2 {
+      font-weight: normal;
+      margin: 0;
+      padding: 0;
+    }
+
+    .modal__seci .socialization {
+      padding-top: 24px;
+      color: #c20f83;
+    }
+
+    .modal__seci .internalization {
+      color: #7fc14e;
+    }
+
+    .modal__seci .externalization {
+      padding-top: 24px;
+      color: #f9b141;
+    }
+
+    .modal__seci .combination {
+      color: #0490b3;
+    }
+
+    .modal__content .modal__seci p {
+      color: black;
+      font-size: 13px;
+    }
+
+    .modal__seci .disclaimer {
+      flex: 0;
+    }
+    
+    .modal__seci .disclaimer p {
+      font-size: 12px;
+      color: black;
+      max-width: none;
+    }
+
+    .modal__seci .button {
+      display: inline-block;
+      background-color: #cb007b;
+      padding: 8px 16px;
+      border-radius: 24px;
+      color: white;
+      cursor:  pointer;
+    }
+
+    .modal__hhceco {
+      background-color: rgba(255,255,255,0.7);
+    }
+
+    .modal__hhceco .modal__content p {
+      color: black;
+    }
+
+    .modal__hhceco .pink {
+      color: #cb007b; 
+    }
+
+
+
+    .modal__links {
+      display: flex;
+      flex-direction: column;
+      width: auto !important;
+      max-width: 80vw;
+      padding: 24px;
+      background-color: #f2f2f2;
+    }
+
+    .modal__content .modal__links h1 {
+      font-size: 24px;
+      padding: 0;
+      margin: 40px 0 16px 0
+    }
+
+    .modal__links h1:first-child {
+      margin-top: 0;
+    }
+
+    .modal__links .link {
+      display: flex;
+      align-items: center;
+      color: black;
+      margin: 0 0 16px 0;
+      cursor: pointer;
+    }
+
+    .modal__links .link img {
+      width: 24px;
+      padding: 0;
+      margin: 0 8px 0 0;
+    }
+
+    .modal__links nav {
+      margin-top: 40px;
+    }
+
+    .modal__links nav .button {
+      display: inline-block;
+      background-color: #cb007b;
+      padding: 16px 32px;
+      border-radius: 24px;
+      color: white;
+      cursor:  pointer;
+    }
+    
+
+    
     
     .modal__content h1 {
       font-size: 32px;
@@ -484,19 +737,33 @@
     #hhc__modal_1,
     #hhc__modal_2,
     #hhc__modal_3,
-    #hhc__modal_4 {
+    #hhc__modal_6,
+    #hhc__modal_4,
+    #hhc__modal_5,
+    #hhc__modal_7,
+    #hhc__modal_17 {
       background-color: rgba(255,255,255,0.7);
     }
 
     #timeline__modal_1,
     #timeline__modal_2,
-    #timeline__modal_3,
-    #timeline__modal_4 {
+    #timeline__modal_3 {
       background-color: rgba(0,0,0,0.4);
     }
 
-    
+    #hhc__modal_13 .modal__content,
+    #hhc__modal_14 .modal__content,
+    #hhc__modal_15 .modal__content,
+    #hhc__modal_16 .modal__content
+    {
+      max-width: 400px;
+      margin: 0 auto;
+    }
 
+
+    #hhc__modal_15 li {
+      color: white;
+    }
 
 
     .modal__content--hhc {
@@ -517,12 +784,12 @@
     }
 
     @media (min-width:960px) {
-      .hcc__with_image {
+      .hhc__with_image {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
       }
-      .hcc__with_image > div:first-child {
+      .hhc__with_image > div:first-child {
         margin-right: 24px;
       }
     }
@@ -558,15 +825,6 @@
       margin-left: 20px;
       max-width: 280px;
       font-size: 18px;
-    }
-
-    #hhc__modal_5 .modal__content--hhc p,
-    #hhc__modal_5 .modal__content--hhc li,
-    #hhc__modal_6 .modal__content--hhc p,
-    #hhc__modal_6 .modal__content--hhc li,
-    #hhc__modal_7 .modal__content--hhc p,
-    #hhc__modal_7 .modal__content--hhc li {
-      color: white;
     }
 
     #longfellow_modal {
@@ -821,7 +1079,7 @@
       <h3>
         Celebrating the achievements<br/>
         and legacy of a nursing and<br/>
-        healthcare pioneer.
+        health care pioneer.
       </h3>
     </div>
     <div id="splash__progress">
@@ -937,7 +1195,7 @@
 
       <div id="nav__brand">
         <img src="assets/logo.png" alt="Eisai"/>
-        <div>Copyright © Eisai Inc. 2020. All Rights Reserved.</div>
+        <div>Copyright © Eisai Inc. 2024. All Rights Reserved.</div>
       </div>
     </div>
   </nav>
@@ -968,9 +1226,6 @@
         <a href="https://cwfn.uoguelph.ca/" target="_blank" alt="The Collected Works of Florence Nightingale">The Collected Works of Florence Nightingale</a>
       </p>
       <p>
-        <a href="http://hgar-srv3.bu.edu/web/florence-nightingale/home" target="_blank" alt="The Florence Nightingale Digitization Project">The Florence Nightingale Digitization Project</a>
-      </p>
-      <p>
         <a href="http://www.countryjoe.com/nightingale/" target="_blank" alt="A Tribute to Florence Nightingale">A Tribute to Florence Nightingale</a>
       </p>
     </div>
@@ -981,7 +1236,16 @@
       <div></div>
       <div>
         <img src="assets/hhc-who.png" alt="World Health Organization"/>
-        <p>Aiming to eliminate lymphatic filariasis (LF), a major public health issue prominent in certain parts of the world, Eisai has committed to providing LF treatment for free to endemic countries that need the treatment until LF is eliminated in these countries. Since 2013, Eisai has supplied 2 billion tablets (as of March 2020) through the WHO to the people at risk in LF endemic countries.</p>
+        <p>
+          Aiming to eliminate lymphatic filariasis (LF), a major
+          public health issue prominent in certain parts of the
+          world, Eisai has committed to providing LF
+          treatment for free to endemic countries that need
+          the treatment until LF is eliminated in these
+          countries. Since 2013, Eisai has supplied 2.38 billion
+          tablets (as of October 2024) through the WHO to the
+          people at risk in LF endemic countries.
+        </p>
       </div>
       <div>
         <div class="hhc__next_button">
@@ -999,10 +1263,12 @@
         </div>
       </div>
       <div>
-        <img src="assets/hhc-DNDi.png" alt="DNDi"/>
-        <p>Eisai is collaborating with DND<em>i</em>, a non-profit drug research and development (R&amp;D) organization, on the clinical development of an Eisai antifungal compound for mycetoma, one of the world&#39;s most neglected tropical diseases (NTDs). Eisai is also working with DND<em>i</em> in other initiatives such as &quot;NTD Drug Discovery Booster&quot; consortium and The Global Antibiotic Research and Development Partnership (GARDP)<sup>*</sup>.</p>
+        <img src="assets/hhc-ghit.png" alt="GHIT Fund"/>
         <p>
-          <sup>*</sup>GARDP has been successfully incubated by DND<em>i</em> and is now an independent not-for-profit organization developing new treatments for drug-resistant infections that pose the greatest threat to health.
+          Eisai co-established GHIT Fund with the Government of Japan, the Bill &amp; Melinda Gates Foundation and other 4 Japanese pharmaceutical companies in 2013.
+        </p>
+        <p>
+          Since 2013, Eisai is taking the role of the council member as one of the founding partners. The GHIT Fund helps advance the development of new medicines, vaccines and diagnostics to fight infectious diseases in the developing world.
         </p>
       </div>
       <div>
@@ -1021,34 +1287,16 @@
         </div>
       </div>
       <div>
-        <img src="assets/hhc-access.png" alt="Access Accelerated"/>
-        <p>In January 2017, Eisai joined 22 healthcare and pharmaceutical companies, the World Bank and Union for International Cancer Control (UICC) to form Access Accelerated, a new coalition to address non-communicable disease (NCD) burdens in low and lower-middle income countries.</p>
+        <img src="assets/hhc-DNDi.png" alt="DNDi"/>
+        <p>Eisai is collaborating with DND<em>i</em>, a non-profit drug research and development (R&amp;D) organization, on the clinical development of an Eisai antifungal compound for mycetoma, one of the world&#39;s most neglected tropical diseases (NTDs). Eisai is also working with DND<em>i</em> in other initiatives such as &quot;NTD Drug Discovery Booster&quot; consortium and The Global Antibiotic Research and Development Partnership (GARDP)<sup>*</sup>.</p>
+        <p>
+          <sup>*</sup>GARDP has been successfully incubated by DND<em>i</em> and is now an independent not-for-profit organization developing new treatments for drug-resistant infections that pose the greatest threat to health.
+        </p>
       </div>
       <div>
-        <div class="hhc__next_button">
+        <!-- <div class="hhc__next_button">
           <i class="fas fa-long-arrow-alt-right"></i>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="modal" id="hhc__modal_4">
-    <div class="modal__content modal__content--hhc">
-      <div>
-        <div class="hhc__prev_button">
-          <i class="fas fa-long-arrow-alt-left"></i>
-        </div>
-      </div>
-      <div>
-        <img src="assets/hhc-ghit.png" alt="GHIT Fund"/>
-        <p>
-          Eisai co-established GHIT Fund with the Government of Japan, the Bill &amp; Melinda Gates Foundation and other 4 Japanese pharmaceutical companies in 2013.
-        </p>
-        <p>
-          Since 2013, Eisai is taking the role of the council member as one of the founding partners. The GHIT Fund helps advance the development of new medicines, vaccines and diagnostics to fight infectious diseases in the developing world.
-        </p>
-      </div>
-      <div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -1057,18 +1305,23 @@
     <div class="modal__content modal__content--hhc">
       <div>
       </div>
-      <div class="hcc__with_image">
+      <div class="hhc__with_image">
         <div>
           <img src="assets/hhc-magnolia_img.png" alt="Magnolia Members" width="200"/>
         </div>
         <div style="margin-top:-51px">
           <img src="assets/hhc-magnolia.png" alt="Magnolia"/>
-          <p><strong>MAGNOLIA MEALS AT HOME<sup>®</sup></strong> provides meals at no cost to eligible patients and families living with any type of cancer.</p>
+          <p>
+            <strong>MAGNOLIA MEALS AT HOME®</strong> provides meals
+            at no cost to eligible patients and families living
+            with cancer.
+          </p>
           <ul>
-            <li>2,400+ patients have enrolled in the program</li>
-            <li>200+ employees have signed up to volunteer</li>
-            <li>63,000+ meals have been delivered</li>
-          </ul>
+            <li>4,850+ patients have enrolled in the program
+            <li>5,500+ family members served
+            <li>144,062+ meals have been delivered
+            <li>350+ employees have signed up to volunteer
+            </ul>
         </div>
       </div>
       <div>
@@ -1086,17 +1339,33 @@
           <i class="fas fa-long-arrow-alt-left"></i>
         </div>
       </div>
-      <div class="hcc__with_image">
-        <div>
+      <div class="hhc__with_image">
+        <div class="hhc__meail_train__infographic">
           <img src="assets/hhc-meal_train_img.png" alt="Meal Train Menu" width="200"/>
         </div>
         <div>
-          <img src="assets/hhc-meal_train.png" alt="Meal Train"/>
-          <p><strong>MEAL TRAIN SPONSORED BY MAGNOLIA</strong><br/>Mealtrain.com is a free, easy-to-use, shared online calendar that streamlines the process of giving and receiving meals to households going through a challenging or difficult time. Meal Train sponsored by Magnolia aims to broaden the positive impact of providing meals to patients living with breast cancer and their families during treatment.</p>
-          <ul>
-            <li>39,000+ meal trains have been created</li>
-            <li>643,000+ meals organized</li>
-          </ul>
+          <img src="assets/hhc-meal_train.png" alt="Meal Train" width="300"/>
+          <p>
+            <strong>MEAL TRAIN SPONSORED BY MAGNOLIA</strong><br/>
+            Mealtrain.com is a free, easy-to-use, shared
+            online calendar that streamlines the process of
+            giving and receiving meals to households going
+            through a challenging or difficult time. Meal Train
+            sponsored by Magnolia aims to broaden the
+            positive impact of providing meals to patients
+            living with cancer and Alzheimer's disease and
+            their families during treatment.
+          </p>
+          <p>
+            <strong>Cancer</strong><br/>
+            <strong>150,396</strong> meal trains created.<br/>
+            <strong>2,046,643</strong> meals organized.
+          </p>
+          <p>
+            <strong>Alzheimer's disease & dementia</strong><br/>
+            <strong>1,639</strong> meal trains created.<br/>
+            <strong>9,899</strong> meals organized.
+          </p>
         </div>
       </div>
       <div>
@@ -1114,22 +1383,218 @@
           <i class="fas fa-long-arrow-alt-left"></i>
         </div>
       </div>
-      <div class="hcc__with_image">
+      <div class="hhc__with_image">
         <div>
           <img src="assets/hhc-paws_img.png" alt="Tieman O'Malley & Dobby" width="200"/>
         </div>
         <div style="margin-top:-62px">
           <img src="assets/hhc-paws.png" alt="Paws for Compassion"/>
-          <p><strong>MAGNOLIA PAWS FOR COMPASSION<sup>®</sup></strong> is a special program, created by Eisai in partnership with the Epilepsy Foundation and 4 Paws for Ability, which seeks to increase access to animal assistance and raise awareness of the many benefits that service and therapy dogs can provide to those coping with an illness, such as epilepsy or a seizure disorder.</p>
+          
+          <p>
+            <strong>MAGNOLIA PAWS FOR COMPASSION®</strong> is a
+            special program, created by Eisai in partnership
+            with the Epilepsy Foundation and 4 Paws for Ability,
+            which seeks to increase access to animal
+            assistance and raise awareness of the many
+            benefits that service and therapy dogs can provide
+            to those coping with an illness, such as epilepsy or
+            a seizure disorder.
+          </p>
           <ul>
-            <li>16 service dogs’ placement costs covered by fundraisers</li>
-            <li>13 employees’ pets completed therapy dog training program</li>
-            <li>19 puppies sponsored to train as service dogs</li>
+            <li>35 puppies sponsored to train as service dogs.
+            <li>49 service dogs’ placement costs covered.
+            <li>14 employees' pets completed therapy dog
+            training program
           </ul>
+
         </div>
       </div>
       <div>
       </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_8">
+    <div class="modal__content">
+      <div class="modal__seci">
+        <div class="title">
+          <h1>SECI MODEL:  PATH TO KNOWLWEDGE CREATION</h1>
+        </div>
+        <div class="row">
+          <div class="col left">
+            <div>
+              <h2 class="socialization">Socialization</h2>
+              <p><strong>Learn Patient Realities:</strong><br/>Interact with patients to see what they need and value</p>
+            </div>
+            <div>
+              <h2 class="internalization">Internalization</h2>
+              <p><strong>Implement the idea:</strong><br/>Put it into place, then observe the new reality.</p>
+            </div>
+          </div>
+          <div class="image">
+            <img src="assets/seci.png" alt="SECI"/>
+          </div>
+          <div class="col right">
+            <div>
+              <h2 class="externalization">Externalization</h2>
+              <p><strong>Develop Ideas:</strong><br/>Sharing what you found, developing ideas and determining how we can meet that need or help deliver on that value.</p>
+            </div>
+            <div>
+              <h2 class="combination">Combination</h2>
+              <p><strong>Seek Input & Create Plans: </strong><br/>Creating the ideas to remove or resolve the worries/anxieties and validating them with patients and caregivers and various partners to ensure they can benefit from the idea. Also, how the idea may be enhanced to serve the needs.</p>
+              <div class="button">
+                Origin of Eisai
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="disclaimer">
+          <p>© Eisai, Ikujiro Nonaka, Ryoko Toyama: The Knowledge-creating theory revisited: knowledge creation as a synthesizing process,<br/>Knowledge Management Research & Practice (2003) 1, 2 -10</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal modal__hhceco" id="hhc__modal_11">
+    <div class="modal__content">
+      <p>
+        <span class="pink">Eisai's <em>hhceco</em> Concept</span> Florence Nightingale's<br/>
+        focus on data collection and collaboration to<br/>
+        achieve improved patient outcomes inspired Eisai's<br/>
+        novel <em>hhceco</em> concept, which combines the<br/>
+        patient-first <em>hhc</em> philosophy with an ecosystem<br/>
+        model. Through this, Eisai aims to harness the<br/>
+        power of collaboration with other companies,<br/>
+        industries and groups to improve outcomes and<br/>
+        services for patients and the general public. The<br/>
+        goal is for groups to continually share data and<br/>
+        technologies, exchange values and grow together.
+      </p>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_17">
+    <div class="modal__content modal__content--hhc">
+      <div>
+        <div class="hhc__prev_button">
+          <i class="fas fa-long-arrow-alt-left"></i>
+        </div>
+      </div>
+      <div class="hhc__with_image">
+        <div class="hhc__meail_train__infographic">
+          <img src="assets/hhc-purpose_planning_img.png" alt="Meal Train Menu" width="200"/>
+        </div>
+        <div>
+          <img src="assets/hhc-purpose-planning.png" alt="Purpose in Planning" width="300"/>
+          <p>
+            Connecting people affected by cancer
+            or Alzheimer's disease and dementia to
+            a library of relevant financial, legal and
+            advance care planning resources.
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="hhc__next_button">
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_13">
+    <div class="modal__content">
+      <p>
+        Partnered with Green Standards to turn 400 tons of corporate materials and equipment into $42,600 in charitable donations.
+      </p>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_14">
+    <div class="modal__content">
+      <p>
+        98% of corporate waste was diverted from landfills and 905 metric tons of C02 emissions reduced during the building transition to our new U.S. headquarters.
+      </p>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_15">
+    <div class="modal__content">
+      <div>
+        <p>
+          Leadership in Energy and Environmental Design (LEED) certified buildings:
+        </p>
+        <ul>
+          <li>Eisai US <em>hhceco</em> Center: Silver-certified</li>
+          <li>Exton Biologics Pilot Plant: Gold-certified</li>
+          <li>Baltimore Pilot Plant: Gold-certified</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_16">
+    <div class="modal__content">
+      <p>
+        Global Environmental, Social & Governance Initiatives: Targeting achieving 100% renewable energy usage by 2030.
+      </p>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_18">
+    <div class="modal__content">
+      <p>
+        Modal 18
+      </p>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_9">
+    <div class="modal__content modal__content--hhc">
+      <div class="modal__links">
+          <h1>Lymphatic Filariasis</h1>
+          <a class="link" href="https://www.eisai.com/sustainability/atm/ntds/lymphaticfilariasis/index.html" target="_blank"><img src="assets/link-link.png" alt=""/> 13 Years of Progress toward Elimination of Lymphatic Filariasis</a>
+          <a class="link" href="https://www.eisai.com/sustainability/atm/medicines/019.html" target="_blank"><img src="assets/link-link.png" alt=""/> Lymphatic Filariasis Elimination Activities in Myanmar</a>
+          <a class="link" href="https://www.eisai.com/sustainability/atm/medicines/020.html" target="_blank"><img src="assets/link-link.png" alt=""/> Activities for Lymphatic Filariasis Elimination in Kenya</a>
+
+          <h1>Neglected Tropical Diseases</h1>
+          <a class="link" href="https://www.eisai.com/sustainability/atm/markets/020.html" target="_blank"><img src="assets/link-link.png" alt=""/> World NTD Day; January 30, 2024; Eisai supports “Unite. Act. Eliminate.” event</a>
+          <a class="link" href="https://www.eisai.com/sustainability/atm/markets/020.html" target="_blank"><img src="assets/link-link.png" alt=""/> World NTD Day; February 13, 2023; Eisai supports “ACT now ACT together” event</a>
+          <a class="link" href="https://twitter.com/Eisai_SDGs/status/1354250896184537090" target="_blank"><img src="assets/link-link.png" alt=""/> Access to Medicines Index 2022; Eisai ranked 12th in efforts to improve access to medicines</a>
+          <a class="link" href="https://twitter.com/Eisai_SDGs/status/1361954930517442563" target="_blank"><img src="assets/link-link.png" alt=""/> Access to Medicines Index 2021; Eisai collaborates with Seeding Labs to donate lab equipment</a>
+
+          <nav>
+            <a class="button" href="https://www.eisai.com/sustainability/index.html" target="_blank">
+              Learn more about Eisai’s Sustainability Management
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_10">
+    <div class="modal__content modal__content--hhc">
+      <video controls>
+        <source src="assets/Eisai English final (web).mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_11">
+    <div class="modal__content modal__content--hhc">
+      <div class="modal__origin">
+        <h1>ORIGIN OF EISAI</h1>
+        <img src="assets/hhc-origin.jpg" alt=""/>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal" id="hhc__modal_12">
+    <div class="modal__content modal__content--hhc">
+      <video controls>
+        <source src="assets/lymphaticfilariasis_01.mp4" type="video/mp4">
+      </video>
     </div>
   </section>
 
@@ -2017,7 +2482,6 @@
 
     const _pool = {};
     function trigger(event, data) {
-      // console.log(event, data);
       if([
         'welcome',
         'hhc',
@@ -2128,12 +2592,12 @@
 
       // Add mesh and set up click targets.
       // Name meshes you want to have clicked with "active_{action name}". 
-      await BABYLON.SceneLoader.ImportMeshAsync(null, '', "./assets/scene_145.glb", scene, e => trigger('scene_loading', {loaded:e.loaded}));
+      await BABYLON.SceneLoader.ImportMeshAsync(null, '', "./assets/scene.glb", scene, e => trigger('scene_loading', {loaded:e.loaded}));
 
       // Load the welcome video
-      await preload("./assets/Welcome_v2_02.mp4", progress => trigger('welcome_loading', progress));
+      await preload("./assets/Welcome_v4.mp4", progress => trigger('welcome_loading', progress));
       const welcomeMaterial = new BABYLON.StandardMaterial("mat", scene);
-      const videoTexture = new BABYLON.VideoTexture("video", ["assets/Welcome_v2_02.mp4"/*, "textures/babylonjs.webm"*/], scene, true, true);
+      const videoTexture = new BABYLON.VideoTexture("video", ["assets/Welcome_v4.mp4"], scene, true, true);
       welcomeMaterial.diffuseTexture = videoTexture;
 
       on("enter_scene", () => {
@@ -2154,10 +2618,19 @@
           'hhc_button_1',
           'hhc_button_2',
           'hhc_button_3',
-          'hhc_button_4',
+          // 'hhc_button_4',
           'hhc_button_5',
           'hhc_button_6',
           'hhc_button_7',
+          'hhc_button_8',
+          'hhc_button_9',
+          'hhc_button_10',
+          'hhc_button_11',
+          'hhc_button_12',
+          'hhc_button_13',
+          'hhc_button_14',
+          'hhc_button_15',
+          'hhc_button_16',
           'timeline',
           'timeline__early_years',
           'timeline__crimean_war',
@@ -2301,7 +2774,6 @@
             pos.z -= 0.5;
             break;
         }
-        // console.log(`moveCameraTo(new BABYLON.Vector3(${camera.position.x.toFixed(2)}, ${camera.position.y.toFixed(2)}, ${camera.position.z.toFixed(2)}), new BABYLON.Vector3(${camera.rotation.x.toFixed(2)}, ${camera.rotation.y.toFixed(2)}, 0))`);
       });
 
       // Camera Animations
@@ -2800,10 +3272,19 @@
       hideMesh("hhc_button_1");
       hideMesh("hhc_button_2");
       hideMesh("hhc_button_3");
-      hideMesh("hhc_button_4");
+      // hideMesh("hhc_button_4");
       hideMesh("hhc_button_5");
       hideMesh("hhc_button_6");
       hideMesh("hhc_button_7");
+      hideMesh("hhc_button_8");
+      hideMesh("hhc_button_9");
+      hideMesh("hhc_button_10");
+      hideMesh("hhc_button_11");
+      hideMesh("hhc_button_12");
+      hideMesh("hhc_button_13");
+      hideMesh("hhc_button_14");
+      hideMesh("hhc_button_15");
+      hideMesh("hhc_button_16");
       hideMesh("timeline__early_years");
       hideMesh("timeline__crimean_war");
       hideMesh("timeline__crimean_war2");
@@ -2903,10 +3384,19 @@
       showMesh("hhc_button_1");
       showMesh("hhc_button_2");
       showMesh("hhc_button_3");
-      showMesh("hhc_button_4");
+      // showMesh("hhc_button_4");
       showMesh("hhc_button_5");
       showMesh("hhc_button_6");
       showMesh("hhc_button_7");
+      showMesh("hhc_button_8");
+      showMesh("hhc_button_9");
+      showMesh("hhc_button_10");
+      showMesh("hhc_button_11");
+      showMesh("hhc_button_12");
+      showMesh("hhc_button_13");
+      showMesh("hhc_button_14");
+      showMesh("hhc_button_15");
+      showMesh("hhc_button_16");
       moveCameraTo(new BABYLON.Vector3(3.81, 2.00, 5.49), new BABYLON.Vector3(-0.03, 0.51, 0));
     });
 
@@ -2920,10 +3410,19 @@
       showMesh("hhc_button_1");
       showMesh("hhc_button_2");
       showMesh("hhc_button_3");
-      showMesh("hhc_button_4");
+      // showMesh("hhc_button_4");
       showMesh("hhc_button_5");
       showMesh("hhc_button_6");
       showMesh("hhc_button_7");
+      showMesh("hhc_button_8");
+      showMesh("hhc_button_9");
+      showMesh("hhc_button_10");
+      showMesh("hhc_button_11");
+      showMesh("hhc_button_12");
+      showMesh("hhc_button_13");
+      showMesh("hhc_button_14");
+      showMesh("hhc_button_15");
+      showMesh("hhc_button_16");
       moveCameraTo(new BABYLON.Vector3(2.24, 2.00, 18.97), new BABYLON.Vector3(-0.11, 0.15, 0));
       // moveCameraTo(new BABYLON.Vector3(3.31, 2.00, 12.99), new BABYLON.Vector3(-0.11, 0.25, 0));
     });
@@ -2938,10 +3437,19 @@
       showMesh("hhc_button_1");
       showMesh("hhc_button_2");
       showMesh("hhc_button_3");
-      showMesh("hhc_button_4");
+      // showMesh("hhc_button_4");
       showMesh("hhc_button_5");
       showMesh("hhc_button_6");
       showMesh("hhc_button_7");
+      showMesh("hhc_button_8");
+      showMesh("hhc_button_9");
+      showMesh("hhc_button_10");
+      showMesh("hhc_button_11");
+      showMesh("hhc_button_12");
+      showMesh("hhc_button_13");
+      showMesh("hhc_button_14");
+      showMesh("hhc_button_15");
+      showMesh("hhc_button_16");
       moveCameraTo(new BABYLON.Vector3(6.31, 2.00, 17.49), new BABYLON.Vector3(-0.11, 0.39, 0));
       // moveCameraTo(new BABYLON.Vector3(3.31, 2.00, 12.99), new BABYLON.Vector3(-0.11, 0.25, 0));
     });
@@ -2956,10 +3464,18 @@
       showMesh("hhc_button_1");
       showMesh("hhc_button_2");
       showMesh("hhc_button_3");
-      showMesh("hhc_button_4");
+      // showMesh("hhc_button_4");
       showMesh("hhc_button_5");
       showMesh("hhc_button_6");
       showMesh("hhc_button_7");
+      showMesh("hhc_button_8");
+      showMesh("hhc_button_9");
+      showMesh("hhc_button_10");
+      showMesh("hhc_button_11");
+      showMesh("hhc_button_12");
+      showMesh("hhc_button_14");
+      showMesh("hhc_button_15");
+      showMesh("hhc_button_16");
       // moveCameraTo(new BABYLON.Vector3(8.81, 2.00, 10.49), new BABYLON.Vector3(-0.10, 0.79, 0));
       moveCameraTo(new BABYLON.Vector3(11.31, 2.00, 14.49), new BABYLON.Vector3(-0.14, 0.68, 0))
     });
@@ -2974,10 +3490,19 @@
       showMesh("hhc_button_1");
       showMesh("hhc_button_2");
       showMesh("hhc_button_3");
-      showMesh("hhc_button_4");
+      // showMesh("hhc_button_4");
       showMesh("hhc_button_5");
       showMesh("hhc_button_6");
       showMesh("hhc_button_7");
+      showMesh("hhc_button_8");
+      showMesh("hhc_button_9");
+      showMesh("hhc_button_10");
+      showMesh("hhc_button_11");
+      showMesh("hhc_button_12");
+      showMesh("hhc_button_13");
+      showMesh("hhc_button_14");
+      showMesh("hhc_button_15");
+      showMesh("hhc_button_16");
       moveCameraTo(new BABYLON.Vector3(15.31, 2.00, 11.99), new BABYLON.Vector3(-0.09, 0.94, 0))
       // moveCameraTo(new BABYLON.Vector3(8.81, 2.00, 10.49), new BABYLON.Vector3(-0.10, 0.79, 0));
     });
@@ -3252,7 +3777,15 @@
 
     // Modals
 
+    let activeModal = null;
+
     function hideModals() {
+      if(activeModal == 'hhc__modal_12') {
+        document.querySelector("#hhc__modal_12 video").pause();
+        switchModal('hhc__modal_9');
+        return;
+      }
+      activeModal = null;
       document.getElementById("close_modal_button").style.display = "none";
       document.querySelectorAll(".modal").forEach($el => {
         $el.style.transition = "opacity 200ms ease-in-out";
@@ -3261,10 +3794,12 @@
       });
       
       document.getElementById("nav").style.display = "block";
+      document.querySelectorAll('video').forEach(el => el.pause());
     }
 
     function showModal(id, closeButtonColor="white") {
       console.log('showing modal', id);
+      activeModal = id;
       const $el = document.getElementById(id);
       $el.style.opacity = 0;
       $el.style.display = "block";
@@ -3277,6 +3812,8 @@
     }
 
     function switchModal(id, closeButtonColor="white") {
+      console.log('switch modal', id);
+      activeModal = id;
       document.querySelectorAll(".modal").forEach($el => {
         $el.style.display = "none";
       });
@@ -3302,10 +3839,23 @@
     on("hhc_button_1", () => showModal("hhc__modal_1", "#424242"))
     on("hhc_button_2", () => showModal("hhc__modal_2", "#424242"))
     on("hhc_button_3", () => showModal("hhc__modal_3", "#424242"))
-    on("hhc_button_4", () => showModal("hhc__modal_4", "#424242"))
-    on("hhc_button_5", () => showModal("hhc__modal_5"))
-    on("hhc_button_6", () => showModal("hhc__modal_6"))
-    on("hhc_button_7", () => showModal("hhc__modal_7"))
+    // on("hhc_button_4", () => showModal("hhc__modal_4", "#424242"))
+    on("hhc_button_5", () => showModal("hhc__modal_5", "#424242"))
+    on("hhc_button_6", () => showModal("hhc__modal_6", "#424242"))
+    on("hhc_button_7", () => showModal("hhc__modal_7", "#424242"))
+    on("hhc_button_8", () => showModal("hhc__modal_8"))
+    on("hhc_button_9", () => showModal("hhc__modal_9"))
+    on("hhc_button_10", () => {
+      showModal("hhc__modal_10");
+      document.querySelector("#hhc__modal_10 video").currentTime = 0;
+      document.querySelector("#hhc__modal_10 video").play();
+    });
+    on("hhc_button_11", () => showModal("hhc__modal_11", '#424242'))
+    on("hhc_button_12", () => showModal("hhc__modal_17", "#424242"))
+    on("hhc_button_13", () => showModal("hhc__modal_13"))
+    on("hhc_button_14", () => showModal("hhc__modal_14"))
+    on("hhc_button_15", () => showModal("hhc__modal_15"))
+    on("hhc_button_16", () => showModal("hhc__modal_16"))
 
     on("timeline_button_1", () => showModal("timeline__modal_1"))
     on("timeline_button_2", () => showModal("timeline__modal_2"))
@@ -3318,13 +3868,21 @@
     document.querySelector("#hhc__modal_2 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_1"));
     document.querySelector("#hhc__modal_2 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_3"));
     document.querySelector("#hhc__modal_3 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_2"));
-    document.querySelector("#hhc__modal_3 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_4"));
-    document.querySelector("#hhc__modal_4 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_3"));
+    // document.querySelector("#hhc__modal_3 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_1"));
+    // document.querySelector("#hhc__modal_4 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_3"));
 
     document.querySelector("#hhc__modal_5 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_6"));
     document.querySelector("#hhc__modal_6 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_5"));
-    document.querySelector("#hhc__modal_6 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_7"));
-    document.querySelector("#hhc__modal_7 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_6"));
+    document.querySelector("#hhc__modal_6 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_17"));
+    document.querySelector("#hhc__modal_7 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_17"));
+    document.querySelector("#hhc__modal_17 .hhc__prev_button").addEventListener('click', () => switchModal("hhc__modal_6"));
+    document.querySelector("#hhc__modal_17 .hhc__next_button").addEventListener('click', () => switchModal("hhc__modal_7"));
+    document.querySelector(".modal__seci .button").addEventListener('click', () => switchModal("hhc__modal_11"))
+    //document.querySelector(".modal__links .link--video").addEventListener('click', () => {
+    //  switchModal("hhc__modal_12");
+    //  document.querySelector("#hhc__modal_12 video").currentTime = 0;
+    //  document.querySelector("#hhc__modal_12 video").play();
+    //})
 
     document.querySelector("#timeline__modal_1 .next").addEventListener('click', () => switchModal("timeline__modal_2"));
     document.querySelector("#timeline__modal_2 .next").addEventListener('click', () => switchModal("timeline__modal_3"));
@@ -3337,7 +3895,6 @@
     document.querySelector("#coxcomb__modal_2 .next").addEventListener('click', () => switchModal("coxcomb__modal_3"));
     document.querySelector("#coxcomb__modal_3 .prev").addEventListener('click', () => switchModal("coxcomb__modal_2"));
     document.querySelector("#coxcomb__modal_2 .prev").addEventListener('click', () => switchModal("coxcomb__modal_1"));
-
 
     
     // Quiz
@@ -3457,6 +4014,7 @@
         <p><i class="far fa-hand-pointer"></i> Click +'s to explore further.</p>
       `)
     }, 1000));
+
 
   </script>
 </body>
