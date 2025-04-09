@@ -1060,6 +1060,10 @@
       padding: 0;
       margin: 0;
     }
+
+    .osano-cm-widget {
+      display: none;
+    }
     
   </style>
 </head>
@@ -1191,6 +1195,11 @@
       </div>
       <div class="nav__button" id="nav__privacy">
         <p><a href="https://us.eisai.com/privacy-policy" target="_blank">Privacy Policy</a></p>
+      </div>
+      <div class="nav__button" id="nav__cookies">
+        <p>
+          <a href="#" onclick="javascript:Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')" data-variantitemid-"{79F48031-0817-4CC6-BEF4-73912387A16}" title-"Cookie Preferences" data-variantfieldname="Link" class="gtm-cookie-link" data-uw-rm-kbnav="click" data-uw-rm-brl-"PR" data-uw-original-href-"https://eisai.hhcphilosophy.com" style="transition: all;">Cookie Preferences</a>
+        </p>
       </div>
 
       <div style="flex:1"></div>
@@ -2460,7 +2469,7 @@
 
 
   <script>
-    try { eval("const foo=(x=1)=>x+1"); }
+    try { eval("const test=(x=1)=>x+1"); }
     catch (e) { 
       document.getElementById("splash__progress").style.display = "none";
       document.getElementById("splash__bad_browser").style.display = "block";
@@ -2469,15 +2478,40 @@
   <script src="https://kit.fontawesome.com/6a10f0a410.js" crossorigin="anonymous"></script>
   <script src="https://preview.babylonjs.com/babylon.js"></script>
   <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-165925500-1"></script>
+
+  <!-- Clarity Tag Start -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag(
+        'consent', 'default', {
+        'ad_storage': 'granted',
+        'analytics_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'personalization_storage': 'granted',
+        'functionality_storage': 'granted',
+        'security_storage': 'granted',
+        'wait_for_update': 500
+    });
+    gtag("set", "ads_data_redaction", true);
+    </script>
+  <!-- Clarity Tag End -->
+  
+  <!-- Osano Script Start-->
+  <script src="https://cmp.osano.com/16BPl9ToJZ7g11XSo/e698ba1b-f7d8-4506-a7be-c00b0e1a4ee1/osano.js"></script>
+  <!-- Osano Script End-->
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MKNJDD2K');</script>
+  <!-- End Google Tag Manager -->
+
 
   <script>
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-165925500-1');
-
 
     // Simple event pool.
 
@@ -2537,12 +2571,12 @@
         'quotes__linkedin7',
         'quotes__linkedin8'
       ].includes(event)) {
-        gtag('event', event);
+        gtag?.('event', event);
         // window.dataLayer.push({'pageview': event});
       }
 
       if(event === 'quiz__button') {
-        gtag('event', 'quiz_start');
+        gtag?.('event', 'quiz_start');
         // window.dataLayer.push({'pageview': 'quiz_start'});
       }
 
@@ -2557,7 +2591,6 @@
       }
       _pool[event].push(handler);
     }
-    function xon() {};
 
 
     // Utils.
